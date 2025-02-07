@@ -4,7 +4,7 @@ import 'package:lpkni/app/modules/Customer/ForgotPassword/controllers/VerifotpCu
 
 class VerifotpcustomerView extends GetView<VerifotpcustomerController> {
   const VerifotpcustomerView({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
