@@ -16,19 +16,33 @@ class OnboardingView extends GetView<OnboardingController> {
           PageView.builder(
             controller: controller.pageController,
             onPageChanged: controller.updatePage,
-            itemCount: 3, // Jumlah halaman onboarding
+            itemCount: 3,
             itemBuilder: (context, index) {
               return Stack(
                 children: [
-                  /// **Background Image yang bisa dinaikkan**
+                  /// **Background Image yang dinaikkan**
                   Positioned(
-                    top: -120, // Naikkan background jika perlu
+                    top: -120,
                     left: 0,
                     right: 0,
                     bottom: 0,
                     child: Image.asset(
-                      'assets/images/splashScreen.png',
+                      'assets/images/backGround.png',
                       fit: BoxFit.cover,
+                    ),
+                  ),
+
+                  /// **Gambar tambahan di atas Navigasi Rounded**
+                  Positioned(
+                    top: MediaQuery.of(context).size.height *0.23, // Atur posisi gambar
+                    left: MediaQuery.of(context).size.width * 0.1, // Posisi horizontal
+                    child: SizedBox(
+                      width: 300, // Atur lebar gambar
+                      height: 300, // Atur tinggi gambar
+                      child: Image.asset(
+                        index == 0 ?'assets/images/logo.png':index ==1?'assets/images/ProfilePerempuan.png':'assets/images/ProfilLaki.png', // Ganti dengan aset yang diinginkan
+                        fit: BoxFit.contain, // Menyesuaikan ukuran tanpa distorsi
+                      ),
                     ),
                   ),
 
