@@ -31,10 +31,10 @@ class AppPages {
       page: () => SponsorView(),
       binding: Sponsorbinding(),
     ),
-    GetPage(
-      name: _Paths.ONBOARDING2,
-      page: () => OnboardingView(),
-      binding: OnboardingBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.ONBOARDING2,
+    //   page: () => OnboardingView(),
+    //   binding: OnboardingBinding(),
+    // ),
   ];
 }
