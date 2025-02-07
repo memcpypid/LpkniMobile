@@ -9,8 +9,8 @@ void main() {
   runApp(
     GetMaterialApp(
       title: "Application",
-      home: SplashScreen(),
-      // initialRoute: AppPages.INITIAL,
+      // home: SplashScreen(),
+      initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
     ),
