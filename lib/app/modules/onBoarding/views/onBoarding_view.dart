@@ -34,14 +34,21 @@ class OnboardingView extends GetView<OnboardingController> {
 
                   /// **Gambar tambahan di atas Navigasi Rounded**
                   Positioned(
-                    top: MediaQuery.of(context).size.height *0.23, // Atur posisi gambar
-                    left: MediaQuery.of(context).size.width * 0.1, // Posisi horizontal
+                    top: MediaQuery.of(context).size.height *
+                        0.23, // Atur posisi gambar
+                    left: MediaQuery.of(context).size.width *
+                        0.15, // Posisi horizontal
                     child: SizedBox(
                       width: 300, // Atur lebar gambar
                       height: 300, // Atur tinggi gambar
                       child: Image.asset(
-                        index == 0 ?'assets/images/logo.png':index ==1?'assets/images/ProfilePerempuan.png':'assets/images/ProfilLaki.png', // Ganti dengan aset yang diinginkan
-                        fit: BoxFit.contain, // Menyesuaikan ukuran tanpa distorsi
+                        index == 0
+                            ? 'assets/images/logo.png'
+                            : index == 1
+                                ? 'assets/images/ProfilePerempuan.png'
+                                : 'assets/images/ProfilLaki.png', // Ganti dengan aset yang diinginkan
+                        fit: BoxFit
+                            .contain, // Menyesuaikan ukuran tanpa distorsi
                       ),
                     ),
                   ),
@@ -50,7 +57,8 @@ class OnboardingView extends GetView<OnboardingController> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 30),
                       height: 320,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -111,10 +119,14 @@ class OnboardingView extends GetView<OnboardingController> {
                                 (pageIndex) => AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
                                   margin: EdgeInsets.symmetric(horizontal: 4),
-                                  width: controller.currentPage.value == pageIndex ? 25 : 8,
+                                  width:
+                                      controller.currentPage.value == pageIndex
+                                          ? 25
+                                          : 8,
                                   height: 8,
                                   decoration: BoxDecoration(
-                                    color: controller.currentPage.value == pageIndex
+                                    color: controller.currentPage.value ==
+                                            pageIndex
                                         ? Color(0xFF04A981)
                                         : Colors.grey,
                                     borderRadius: BorderRadius.circular(5),
@@ -130,7 +142,8 @@ class OnboardingView extends GetView<OnboardingController> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: controller.nextPage, // Navigasi ke halaman berikutnya
+                              onPressed: controller
+                                  .nextPage, // Navigasi ke halaman berikutnya
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Color(0xFF04A981),
                                 shape: RoundedRectangleBorder(
@@ -140,8 +153,11 @@ class OnboardingView extends GetView<OnboardingController> {
                               ),
                               child: Obx(
                                 () => Text(
-                                  controller.currentPage.value == 2 ? "Mulai" : "Lanjut",
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
+                                  controller.currentPage.value == 2
+                                      ? "Mulai"
+                                      : "Lanjut",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
                                 ),
                               ),
                             ),
