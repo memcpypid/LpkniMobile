@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/VerifotpCustomer_binding.dart';
-import 'package:lpkni/app/modules/Customer/ForgotPassword/views/VerifotpCustomer_view.dart';
+import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/ResetPasswordCustomer_binding.dart';
+import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/StatusPasswordCustomer_binding.dart';
+import 'package:lpkni/app/modules/Customer/ForgotPassword/views/StatusPasswordCustomer_view.dart';
 
 part 'app_routes.dart';
 
@@ -12,8 +13,8 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const VerifotpcustomerView(),
-      binding: VerifotpcustomerBinding(),
+      page: () => const StatuspasswordcustomerView(),
+      binding: StatuspasswordcustomerBinding(),
     ),
   ];
 }

@@ -13,7 +13,7 @@ class VerifotpcustomerController extends GetxController {
       Get.snackbar(
         'Error',
         'Masukkan kode OTP lengkap',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -25,7 +25,7 @@ class VerifotpcustomerController extends GetxController {
       Get.snackbar(
         'Success',
         'Verifikasi OTP berhasil',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -34,7 +34,7 @@ class VerifotpcustomerController extends GetxController {
       Get.snackbar(
         'Error',
         'Kode OTP salah',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -45,7 +45,7 @@ class VerifotpcustomerController extends GetxController {
     Get.snackbar(
       'Info',
       'Kode OTP baru telah dikirim',
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.blue,
       colorText: Colors.white,
     );

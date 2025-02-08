@@ -29,14 +29,23 @@ class VerifotpcustomerView extends GetView<VerifotpcustomerController> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Kode 4 digit telah dikirim ke ${controller.email}',
+              'Kode 4 digit telah dikirim ke :',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 30),
+            Text(
+              '${controller.email}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(4, (index) {
