@@ -9,7 +9,7 @@ void main() {
   runApp(
     GetMaterialApp(
       title: "Application",
-      // home: SplashScreen(),
+      // home: HomecustomerView(),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
