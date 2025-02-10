@@ -4,13 +4,15 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
-    static const ONBOARDING1 = _Paths.ONBOARDING1;
-        static const ONBOARDING2 = _Paths.ONBOARDING2;
+  static const MENU = _Paths.MENU;
+  static const ONBOARDING1 = _Paths.ONBOARDING1;
+  static const ONBOARDING2 = _Paths.ONBOARDING2;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const MENU = '/menu';
   static const ONBOARDING1 = '/onboard1';
   static const ONBOARDING2 = '/onboard2';
 }

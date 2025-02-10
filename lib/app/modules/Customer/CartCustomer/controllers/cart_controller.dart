@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/CartCustomer/model/cart_model.dart';
-import 'package:lpkni/app/modules/Customer/Home/Model/food_model.dart';
+import 'package:lpkni/app/data/Customer/Model/food_model.dart';
 
 class CartController extends GetxController {
   var cartItems = <CartItem>[].obs;

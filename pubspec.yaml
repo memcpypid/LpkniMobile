@@ -47,6 +47,8 @@ dependencies:
   path_provider: ^2.0.9
   connectivity_plus: ^6.0.3
   audioplayers: ^6.1.0
+  flutter_rating_bar: ^4.0.0
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,9 @@ flutter:
     - assets/images/ProfilLaki.png
     - assets/images/backGround.png
     - assets/images/logoHijau.png
+    - assets/food/food1.png
+    - assets/food/food2.png
+    - assets/news/news1.png
     - assets/images/logo.png
     - assets/music/sound1.wav
     - assets/music/sound2.wav
