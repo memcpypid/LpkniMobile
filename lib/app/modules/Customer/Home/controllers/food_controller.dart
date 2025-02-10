@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
-import '../../CartCustomer/controllers/cart_controller.dart';
+import '../../CartCustomer/controllers/cartCustomer_controller.dart';
 
 class FoodController extends GetxController {
-  final CartController cartController = Get.find<CartController>();
+  final CartcustomerController cartController =
+      Get.find<CartcustomerController>();
 
   var newProducts = <FoodItem>[].obs;
   var bestSellers = <FoodItem>[].obs;
@@ -119,14 +120,5 @@ class FoodController extends GetxController {
         soldCount: 200,
       ),
     ]);
-  }
-
-  void toggleCart(FoodItem product) {
-    if (cartController.cartItems.any((item) => item.product == product)) {
-      cartController.removeFromCart(product);
-    } else {
-      cartController.addToCart(product);
-    }
-    update();
   }
 }

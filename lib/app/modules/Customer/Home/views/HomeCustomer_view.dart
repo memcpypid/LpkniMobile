@@ -5,7 +5,7 @@ import 'package:lpkni/app/modules/Customer/Components/controllers/ButtomNavbar_c
 import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widget.dart';
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
 import 'package:lpkni/app/data/Customer/Model/news_model.dart';
-import 'package:lpkni/app/modules/Customer/CartCustomer/controllers/cart_controller.dart';
+import 'package:lpkni/app/modules/Customer/CartCustomer/controllers/cartCustomer_controller.dart';
 import 'package:lpkni/app/modules/Customer/Home/controllers/food_controller.dart';
 
 import 'package:lpkni/app/modules/Customer/Home/controllers/news_controller.dart';
@@ -18,7 +18,8 @@ class HomecustomerView extends StatelessWidget {
   final NewsController newsController = Get.find<NewsController>();
   final ButtomnavbarController navbarController =
       Get.find<ButtomnavbarController>();
-  final CartController cartController = Get.find<CartController>();
+  final CartcustomerController cartController =
+      Get.find<CartcustomerController>();
   Future<void> _refreshData() async {
     // Simulasi delay saat mengambil data
     await Future.delayed(const Duration(seconds: 2));

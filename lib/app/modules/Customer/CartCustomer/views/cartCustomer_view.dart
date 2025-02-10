@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/cart_controller.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:lpkni/app/data/Customer/Model/cart_model.dart';
+import 'package:lpkni/app/modules/Customer/CartCustomer/controllers/cartCustomer_controller.dart';
+import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widget.dart';
 
 class CartcustomerView extends StatelessWidget {
-  final CartController cartController = Get.find<CartController>();
-
-  CartcustomerView({super.key});
+  final CartcustomerController cartController =
+      Get.find<CartcustomerController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _buildAppBar(),
-      body: Obx(() {
-        return cartController.cartItems.isEmpty
-            ? const Center(child: Text("Keranjang masih kosong."))
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    Expanded(child: _buildCartItems()),
-                    _buildPromoInput(),
-                    _buildSummary(),
-                    _buildCheckoutButton(),
-                  ],
-                ),
-              );
-      }),
-      bottomNavigationBar: _buildBottomNavBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildCartItems()), // ✅ Daftar item di keranjang
+            _buildPromoCode(), // ✅ Input kode promo
+          ],
+        ),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildSummaryAndCheckout(), // ✅ Tombol Checkout (Sebelah kanan)
+          BottomNavBar(controller: Get.find()), // ✅ Bottom Navigation
+        ],
+      ),
     );
   }
 
-  AppBar _buildAppBar() {
+  // ✅ AppBar
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -38,158 +43,276 @@ class CartcustomerView extends StatelessWidget {
         icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () => Get.back(),
       ),
-      title: const Text("Keranjang", style: TextStyle(color: Colors.black)),
+      title: const Text(
+        "Keranjang Saya",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       centerTitle: true,
     );
   }
 
+  // ✅ Daftar Cart Items
   Widget _buildCartItems() {
-    return ListView.builder(
-      itemCount: cartController.cartItems.length,
-      itemBuilder: (context, index) {
-        final cartItem = cartController.cartItems[index];
+    return Obx(() {
+      if (cartController.cartItems.isEmpty) {
+        return const Center(
+          child: Text(
+            "Keranjang kosong",
+            style: TextStyle(fontSize: 16, color: Colors.black54),
+          ),
+        );
+      }
+
+      return ListView.builder(
+        itemCount: cartController.cartItems.length,
+        itemBuilder: (context, index) {
+          final product = cartController.cartItems[index];
+          return _buildCartItemWithSwipe(product);
+        },
+      );
+    });
+  }
+
+  // ✅ Slidable Cart Item dengan Checkbox
+  Widget _buildCartItemWithSwipe(CartItem product) {
+    return Slidable(
+      key: Key(product.name),
+      endActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) {
+              _showDeleteConfirmation(product);
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Hapus',
+            flex: 1,
+          ),
+        ],
+      ),
+      child: Obx(() {
         return Card(
+          color: Colors.white,
           margin: const EdgeInsets.symmetric(vertical: 8),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
+          elevation: 2,
+          child: ListTile(
+            leading: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(cartItem.product.image,
-                      width: 70, height: 70, fit: BoxFit.cover),
+                Checkbox(
+                  value: cartController.selectedItems.contains(product),
+                  onChanged: (value) {
+                    cartController.toggleItemSelection(product);
+                  },
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(cartItem.product.name,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text(cartItem.product.price,
-                          style: const TextStyle(color: Colors.green)),
-                    ],
-                  ),
+                const SizedBox(width: 5),
+                Image.asset(
+                  product.image,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
                 ),
-                _buildQuantityControl(cartItem),
+              ],
+            ),
+            title: Text(
+              product.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
+              "Rp${product.totalPrice.toStringAsFixed(0)}",
+              style: const TextStyle(color: Colors.black54),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () =>
-                      cartController.removeFromCart(cartItem.product),
+                  icon: const Icon(Icons.remove_circle_outline,
+                      color: Colors.green),
+                  onPressed: () => cartController.decreaseQuantity(product),
+                ),
+                Text(product.quantity.toString().padLeft(2, '0')),
+                IconButton(
+                  icon:
+                      const Icon(Icons.add_circle_outline, color: Colors.green),
+                  onPressed: () => cartController.increaseQuantity(product),
                 ),
               ],
             ),
           ),
         );
-      },
+      }),
     );
   }
 
-  Widget _buildQuantityControl(cartItem) {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.remove, color: Colors.teal),
-          onPressed: () => cartController.decreaseQuantity(cartItem.product),
+  // ✅ Dialog Konfirmasi Hapus
+  void _showDeleteConfirmation(CartItem product) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
-        Text(cartItem.quantity.toString().padLeft(2, '0'),
-            style: const TextStyle(fontSize: 16)),
-        IconButton(
-          icon: const Icon(Icons.add, color: Colors.teal),
-          onPressed: () => cartController.increaseQuantity(cartItem.product),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // **Warning Icon**
+            const Icon(Icons.warning_amber_rounded,
+                color: Colors.red, size: 50),
+            const SizedBox(height: 10),
+
+            // **Title**
+            const Text(
+              "Hapus Item dari Keranjang?",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87),
+            ),
+            const SizedBox(height: 8),
+
+            // **Subtitle**
+            const Text(
+              "Anda yakin ingin menghapus item ini dari keranjang?",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black54),
+            ),
+            const SizedBox(height: 20),
+
+            // **Action Buttons**
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // **Cancel Button**
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.back(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.grey[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Batal",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+
+                // **Delete Button**
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      cartController.removeFromCart(product);
+                      Get.back();
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Hapus",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
+      isDismissible: true,
     );
   }
 
-  Widget _buildPromoInput() {
+  // ✅ Input Kode Promo
+  Widget _buildPromoCode() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextField(
         decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.local_offer, color: Colors.teal),
+          prefixIcon: const Icon(Icons.local_offer, color: Colors.green),
           hintText: "Masukkan kode promo Anda",
           filled: true,
-          fillColor: Colors.teal.withOpacity(0.1),
+          fillColor: Colors.green.withOpacity(0.1),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none,
           ),
           suffixIcon: IconButton(
-            icon: const Icon(Icons.arrow_forward_ios, color: Colors.teal),
-            onPressed: () {},
+            icon: const Icon(Icons.arrow_forward, color: Colors.green),
+            onPressed: () {
+              cartController.applyCoupon(10000);
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget _buildSummary() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        children: [
-          _buildSummaryItem("Subtotal", cartController.subtotal),
-          _buildSummaryItem("Delivery Fee", cartController.deliveryFee),
-          _buildSummaryItem("Coupon Discount", cartController.discount),
-          const Divider(),
-          _buildSummaryItem("Total Amount", cartController.totalPrice,
-              isTotal: true),
-        ],
-      ),
-    );
-  }
+  // ✅ Ringkasan Harga
+  // ✅ Ringkasan Harga + Checkout Button dalam satu baris
+  Widget _buildSummaryAndCheckout() {
+    return Obx(() {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween, // ✅ Sejajarkan kiri & kanan
+          children: [
+            // **Total Amount**
+            Text(
+              "Total: Rp${cartController.selectedTotalAmount.value.toStringAsFixed(0)}",
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
 
-  Widget _buildSummaryItem(String label, double value, {bool isTotal = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
-          Text("Rp${value.toStringAsFixed(3)}",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCheckoutButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.teal,
-          minimumSize: const Size(double.infinity, 50),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            // **Checkout Button**
+            ElevatedButton(
+              onPressed: cartController.selectedItems.isNotEmpty
+                  ? () {
+                      print(
+                          "Checkout with ${cartController.selectedItems.length} items");
+                    }
+                  : null, // ✅ Disabled jika tidak ada item
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                backgroundColor: cartController.selectedItems.isNotEmpty
+                    ? Colors.green
+                    : Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Obx(() => Text(
+                    "Checkout (${cartController.selectedItems.length})",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+          ],
         ),
-        child: const Text("Checkout",
-            style: TextStyle(fontSize: 18, color: Colors.white)),
-      ),
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    return BottomNavigationBar(
-      currentIndex: 2, // Index untuk tab keranjang
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Menu'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-      ],
-      selectedItemColor: Colors.teal,
-      unselectedItemColor: Colors.grey,
-    );
+      );
+    });
   }
 }

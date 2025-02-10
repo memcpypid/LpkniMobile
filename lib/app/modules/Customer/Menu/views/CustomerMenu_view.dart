@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
+import 'package:lpkni/app/modules/Customer/CartCustomer/controllers/cartCustomer_controller.dart';
 import 'package:lpkni/app/modules/Customer/Components/controllers/ButtomNavbar_controller.dart';
 import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widget.dart';
 import 'package:lpkni/app/modules/Customer/Menu/Controllers/CustomerMenu_controller.dart';
@@ -11,7 +12,8 @@ class CustomermenuView extends StatelessWidget {
       Get.find<CustomermenuController>();
   final ButtomnavbarController navbarController =
       Get.find<ButtomnavbarController>();
-
+  final CartcustomerController cartController =
+      Get.find<CartcustomerController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,7 +241,9 @@ class CustomermenuView extends StatelessWidget {
                     child: IconButton(
                       icon: const Icon(Icons.shopping_cart_outlined,
                           color: Colors.orange),
-                      onPressed: () {},
+                      onPressed: () {
+                        cartController.addToCart(product);
+                      },
                     ),
                   ),
                 ],
