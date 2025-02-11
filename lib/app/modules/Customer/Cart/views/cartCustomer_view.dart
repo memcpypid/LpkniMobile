@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lpkni/app/data/Customer/Model/cart_model.dart';
-import 'package:lpkni/app/modules/Customer/CartCustomer/controllers/cartCustomer_controller.dart';
+import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_controller.dart';
 import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widget.dart';
 
 class CartcustomerView extends StatelessWidget {

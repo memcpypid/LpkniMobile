@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
-import '../../CartCustomer/controllers/cartCustomer_controller.dart';
+import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_controller.dart';
 
 class FoodController extends GetxController {
   final CartcustomerController cartController =
