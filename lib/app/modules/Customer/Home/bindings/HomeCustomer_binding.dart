@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_controller.dart';
 import 'package:lpkni/app/modules/Customer/Components/controllers/ButtomNavbar_controller.dart';
-import 'package:lpkni/app/modules/Customer/Home/controllers/food_controller.dart';
-import 'package:lpkni/app/modules/Customer/Home/controllers/news_controller.dart';
+import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerfood_controller.dart';
+import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerNews_controller.dart';
 
 class HomecustomerBinding extends Bindings {
   @override

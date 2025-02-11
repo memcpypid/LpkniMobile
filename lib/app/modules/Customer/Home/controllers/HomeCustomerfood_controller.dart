@@ -121,4 +121,8 @@ class FoodController extends GetxController {
       ),
     ]);
   }
+
+  void openDetailFood(FoodItem fooditem) {
+    Get.toNamed('/menu-detail', arguments: fooditem);
+  }
 }

@@ -6,11 +6,9 @@ import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widge
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
 import 'package:lpkni/app/data/Customer/Model/news_model.dart';
 import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_controller.dart';
-import 'package:lpkni/app/modules/Customer/Home/controllers/food_controller.dart';
-
-import 'package:lpkni/app/modules/Customer/Home/controllers/news_controller.dart';
+import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerfood_controller.dart';
+import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerNews_controller.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:lpkni/app/modules/Customer/MenuDetail/views/MenuDetailCustomer_view.dart'; // Tambahkan ini di atas
 
 class HomecustomerView extends StatelessWidget {
   HomecustomerView({super.key});
@@ -273,8 +271,8 @@ class HomecustomerView extends StatelessWidget {
       width: isHorizontal ? 170 : null,
       child: GestureDetector(
         onTap: () {
-          Get.to(() => MenudetailcustomerView(
-              foodItem: product)); // 🔥 Navigasi ke Menu Detail
+          productController
+              .openDetailFood(product); // 🔥 Navigasi ke Menu Detail
         },
         child: Card(
           elevation: 4,
@@ -438,8 +436,8 @@ class HomecustomerView extends StatelessWidget {
       child: GestureDetector(
         // 🔥 Tambahkan GestureDetector
         onTap: () {
-          Get.to(() => MenudetailcustomerView(
-              foodItem: product)); // 🔥 Navigasi ke detail menu
+          productController
+              .openDetailFood(product); // 🔥 Navigasi ke detail menu
         },
         child: Card(
           elevation: 4,
@@ -543,52 +541,64 @@ class HomecustomerView extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildNewsItem(News news) {
-  return Container(
-    width: 300, // Lebar tiap berita
-    margin: const EdgeInsets.only(right: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(news.image,
-              fit: BoxFit.cover, width: double.infinity, height: 180),
-        ),
-        Positioned(
-          left: 16,
-          bottom: 16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                news.title,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-              Text(
-                news.description,
-                style: const TextStyle(fontSize: 12, color: Colors.white),
-              ),
-              const SizedBox(height: 5),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Lihat >"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.teal,
-                ),
-              ),
-            ],
+  Widget _buildNewsItem(News news) {
+    return Container(
+      width: 300, // Lebar tiap berita
+      margin: const EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(news.image,
+                fit: BoxFit.cover, width: double.infinity, height: 180),
           ),
-        ),
-      ],
-    ),
-  );
+          Positioned(
+            left: 16,
+            bottom: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  news.title.length > 20
+                      ? "${news.title.substring(0, 20)}..."
+                      : news.title,
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                Text(
+                  news.description.length > 20
+                      ? "${news.description.substring(0, 40)}..."
+                      : news.description,
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                ),
+                const SizedBox(height: 5),
+                ElevatedButton(
+                  onPressed: () {
+                    newsController.openDetailNews(news);
+                  },
+                  child: const Text("Lihat >"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.teal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

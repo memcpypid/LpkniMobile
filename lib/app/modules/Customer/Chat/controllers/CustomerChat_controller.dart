@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lpkni/app/data/Customer/Model/chatList_model.dart';
 import 'package:lpkni/app/data/Customer/Model/chat_model.dart';
-import 'package:lpkni/app/modules/Customer/Chat/views/CustomerRoomChat_view.dart';
 
 class CustomerchatController extends GetxController {
   var messages = <ChatMessage>[].obs;
@@ -145,6 +144,6 @@ class CustomerchatController extends GetxController {
   }
 
   void openChat(ChatListItem chatUser) {
-    Get.to(() => CustomerroomchatView(chatUser: chatUser));
+    Get.toNamed('/chat-room', arguments: chatUser);
   }
 }
