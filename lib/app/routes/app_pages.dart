@@ -16,6 +16,7 @@ import 'package:lpkni/app/modules/Customer/Notification/bindings/notificationCus
 import 'package:lpkni/app/modules/Customer/Notification/views/notificationCustomer_view.dart';
 import 'package:lpkni/app/modules/Customer/Profile/bindings/CustomerProfile_binding.dart';
 import 'package:lpkni/app/modules/Customer/Profile/views/CustomerProfile_view.dart';
+import 'package:lpkni/app/modules/Merchant/Home/bindings/HomeMerchant_binding.dart';
 import 'package:lpkni/app/modules/Merchant/Home/views/HomeMerchant_view.dart';
 part 'app_routes.dart';
 
@@ -27,10 +28,8 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOMEMERCHANT,
-      page: () => HomemerchantView(
-        foodList: [],
-      ),
-      binding: HomecustomerBinding(),
+      page: () => HomemerchantView(),
+      binding: HomemerchantBinding(),
     ),
     GetPage(
       name: _Paths.HOME,

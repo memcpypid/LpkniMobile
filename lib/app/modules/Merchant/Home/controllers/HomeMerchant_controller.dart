@@ -1,23 +1,27 @@
 import 'package:get/get.dart';
+import 'package:lpkni/app/data/Merchant/Model/Merchantfood_model.dart';
+import 'package:lpkni/app/modules/Merchant/Menu/controllers/MenuMerchant_controller.dart';
 
 class HomemerchantController extends GetxController {
-  //TODO: Implement HomeController
+  final MenumerchantController foodController =
+      Get.find(); // ✅ Ambil controller utama
+  var foodList = <FoodItem>[].obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    loadFoodData();
+    _listenToFoodList();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void loadFoodData() {
+    foodList.assignAll(foodController.foodList);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  // 🔹 Sinkronisasi agar perubahan di `MenumerchantController` langsung diperbarui di Home Merchant
+  void _listenToFoodList() {
+    ever(foodController.foodList, (_) {
+      foodList.assignAll(foodController.foodList);
+    });
   }
-
-  void increment() => count.value++;
 }

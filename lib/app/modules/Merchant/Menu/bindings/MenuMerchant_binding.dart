@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:lpkni/app/modules/Merchant/Menu/controllers/MenuMerchant_controllers.dart';
+import 'package:lpkni/app/modules/Merchant/Menu/controllers/MenuMerchant_controller.dart';
 
-class MenumerchantBinding extends Bindings {
+class HomemerchantBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<MenumerchantControllers>(
-      () => MenumerchantControllers(),
+    Get.lazyPut<MenumerchantController>(
+      () => MenumerchantController(),
     );
   }
 }
