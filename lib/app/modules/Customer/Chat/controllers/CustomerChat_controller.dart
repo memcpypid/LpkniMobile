@@ -142,8 +142,4 @@ class CustomerchatController extends GetxController {
       }
     });
   }
-
-  void openChat(ChatListItem chatUser) {
-    Get.toNamed('/chat-room', arguments: chatUser);
-  }
 }

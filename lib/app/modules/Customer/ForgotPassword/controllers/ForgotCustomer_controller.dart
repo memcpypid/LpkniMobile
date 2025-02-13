@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class ForgotcustomerController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -26,5 +27,6 @@ class ForgotcustomerController extends GetxController {
       backgroundColor: Colors.green,
       colorText: Colors.white,
     );
+    Get.toNamed(Routes.OTPPASSWORDCUSTOMER);
   }
 }

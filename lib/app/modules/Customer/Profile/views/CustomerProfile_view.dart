@@ -15,18 +15,26 @@ class CustomerprofileView extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.teal,
-
         elevation: 0,
-        title: const Text("Profil",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold)),
+        title: const Text(
+          "Profil",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back, color: Colors.white),
-        //   onPressed: () => Get.back(),
-        // ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.red,
+              size: 25,
+            ),
+            onPressed: () => profileController.Logout(),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

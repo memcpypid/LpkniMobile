@@ -6,7 +6,7 @@ import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_control
 import 'package:lpkni/app/modules/Customer/Components/controllers/ButtomNavbar_controller.dart';
 import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widget.dart';
 import 'package:lpkni/app/modules/Customer/Menu/Controllers/CustomerMenu_controller.dart';
-import 'package:lpkni/app/modules/Customer/MenuDetail/views/MenuDetailCustomer_view.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class CustomermenuView extends StatelessWidget {
   final CustomermenuController menuController =
@@ -124,8 +124,8 @@ class CustomermenuView extends StatelessWidget {
       width: isHorizontal ? 170 : null,
       child: GestureDetector(
         onTap: () {
-          Get.to(() => MenudetailcustomerView(
-              foodItem: product)); // 🔥 Navigasi ke Menu Detail
+          // 🔥 Navigasi ke Menu Detail
+          Get.toNamed(Routes.MENUDETAILCUSTOMER, arguments: product);
         },
         child: Card(
           elevation: 4,

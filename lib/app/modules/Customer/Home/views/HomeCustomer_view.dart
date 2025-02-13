@@ -6,35 +6,27 @@ import 'package:lpkni/app/modules/Customer/Components/widgets/BottomNavbar_widge
 import 'package:lpkni/app/data/Customer/Model/food_model.dart';
 import 'package:lpkni/app/data/Customer/Model/news_model.dart';
 import 'package:lpkni/app/modules/Customer/Cart/controllers/cartCustomer_controller.dart';
-import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerfood_controller.dart';
-import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomerNews_controller.dart';
+import 'package:lpkni/app/modules/Customer/Home/controllers/HomeCustomer_controller.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class HomecustomerView extends StatelessWidget {
   HomecustomerView({super.key});
 
-  final FoodController productController = Get.find<FoodController>();
-  final NewsController newsController = Get.find<NewsController>();
+  final HomecustomerController controller = Get.find<HomecustomerController>();
+
   final ButtomnavbarController navbarController =
       Get.find<ButtomnavbarController>();
   final CartcustomerController cartController =
       Get.find<CartcustomerController>();
-  Future<void> _refreshData() async {
-    // Simulasi delay saat mengambil data
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Panggil ulang data dari controller atau API
-    productController.loadProducts(); // Jika menggunakan controller
-    newsController.loadNews(); // Jika ada berita
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildAppBarWithSearch(context, 3, 5),
+      appBar: _buildAppBarWithSearch(context, 3, 5, 1),
       body: RefreshIndicator(
-        onRefresh: _refreshData, // Fungsi untuk refresh
+        onRefresh: controller.refreshData, // Fungsi untuk refresh
         child: SingleChildScrollView(
           physics:
               const AlwaysScrollableScrollPhysics(), // Pastikan selalu bisa scroll
@@ -61,7 +53,7 @@ class HomecustomerView extends StatelessWidget {
   }
 
   PreferredSize _buildAppBarWithSearch(
-      BuildContext context, int notifCount, int messageCount) {
+      BuildContext context, int notifCount, int messageCount, int transaction) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(80), // Sesuaikan tinggi AppBar
       child: AppBar(
@@ -96,32 +88,30 @@ class HomecustomerView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
-              // Notifikasi (Dengan Badge)
+              const SizedBox(width: 5),
               badges.Badge(
                 badgeContent: Text(
-                  notifCount > 9
+                  transaction > 9
                       ? "9+"
-                      : notifCount.toString(), // Jika > 9, tampilkan "9+"
+                      : transaction.toString(), // Jika > 9, tampilkan "9+"
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 10,
                       fontWeight: FontWeight.bold),
                 ),
-                showBadge: notifCount > 0, // Hanya tampil jika ada notifikasi
+                showBadge: transaction > 0, // Hanya tampil jika ada pesan
                 position: badges.BadgePosition.topEnd(top: 0, end: 0),
                 badgeStyle: const badges.BadgeStyle(
                   badgeColor: Colors.red,
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.notifications, color: Colors.white),
+                  icon: const Icon(Icons.history, color: Colors.white),
                   onPressed: () {
-                    Get.toNamed('/notification');
+                    Get.toNamed(Routes.CHATLISTCUSTOMER);
                   },
                 ),
               ),
               const SizedBox(width: 5),
-
               // Pesan (Dengan Badge)
               badges.Badge(
                 badgeContent: Text(
@@ -141,7 +131,31 @@ class HomecustomerView extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.chat_bubble, color: Colors.white),
                   onPressed: () {
-                    Get.toNamed('/chat-list');
+                    Get.toNamed(Routes.CHATLISTCUSTOMER);
+                  },
+                ),
+              ),
+              const SizedBox(width: 5),
+              // Notifikasi (Dengan Badge)
+              badges.Badge(
+                badgeContent: Text(
+                  notifCount > 9
+                      ? "9+"
+                      : notifCount.toString(), // Jika > 9, tampilkan "9+"
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold),
+                ),
+                showBadge: notifCount > 0, // Hanya tampil jika ada notifikasi
+                position: badges.BadgePosition.topEnd(top: 0, end: 0),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.notifications, color: Colors.white),
+                  onPressed: () {
+                    Get.toNamed(Routes.NOTIFICATIONCUSTOMER);
                   },
                 ),
               ),
@@ -186,7 +200,7 @@ class HomecustomerView extends StatelessWidget {
 
   Widget _buildHorizontalProductList() {
     return Obx(() {
-      if (productController.newProducts.isEmpty) {
+      if (controller.newProducts.isEmpty) {
         return const Padding(
           padding: EdgeInsets.all(20.0),
           child: Center(
@@ -199,9 +213,9 @@ class HomecustomerView extends StatelessWidget {
         height: 250,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: productController.newProducts.length,
+          itemCount: controller.newProducts.length,
           itemBuilder: (context, index) {
-            final product = productController.newProducts[index];
+            final product = controller.newProducts[index];
             return _buildProductItemHorizontal(product, isHorizontal: true);
           },
         ),
@@ -211,7 +225,7 @@ class HomecustomerView extends StatelessWidget {
 
   Widget _buildHorizontalNewsList() {
     return Obx(() {
-      if (newsController.newsList.isEmpty) {
+      if (controller.newsList.isEmpty) {
         return const Padding(
           padding: EdgeInsets.all(20.0),
           child: Center(
@@ -224,9 +238,9 @@ class HomecustomerView extends StatelessWidget {
         height: 180,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: newsController.newsList.length,
+          itemCount: controller.newsList.length,
           itemBuilder: (context, index) {
-            final news = newsController.newsList[index];
+            final news = controller.newsList[index];
             return _buildNewsItem(news);
           },
         ),
@@ -236,7 +250,7 @@ class HomecustomerView extends StatelessWidget {
 
   Widget _buildVerticalBestSellerGrid() {
     return Obx(() {
-      if (productController.bestSellers.isEmpty) {
+      if (controller.bestSellers.isEmpty) {
         return const Padding(
           padding: EdgeInsets.all(20.0),
           child: Center(
@@ -254,9 +268,9 @@ class HomecustomerView extends StatelessWidget {
           mainAxisSpacing: 10,
           childAspectRatio: 0.45,
         ),
-        itemCount: productController.bestSellers.length,
+        itemCount: controller.bestSellers.length,
         itemBuilder: (context, index) {
-          final product = productController.bestSellers[index];
+          final product = controller.bestSellers[index];
           return _buildProductItem(product);
         },
       );
@@ -271,8 +285,8 @@ class HomecustomerView extends StatelessWidget {
       width: isHorizontal ? 170 : null,
       child: GestureDetector(
         onTap: () {
-          productController
-              .openDetailFood(product); // 🔥 Navigasi ke Menu Detail
+          Get.toNamed(Routes.MENUDETAILCUSTOMER,
+              arguments: product); // 🔥 Navigasi ke Menu Detail
         },
         child: Card(
           elevation: 4,
@@ -436,8 +450,8 @@ class HomecustomerView extends StatelessWidget {
       child: GestureDetector(
         // 🔥 Tambahkan GestureDetector
         onTap: () {
-          productController
-              .openDetailFood(product); // 🔥 Navigasi ke detail menu
+          Get.toNamed(Routes.MENUDETAILCUSTOMER,
+              arguments: product); // 🔥 Navigasi ke detail menu
         },
         child: Card(
           elevation: 4,
@@ -586,7 +600,7 @@ class HomecustomerView extends StatelessWidget {
                 const SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: () {
-                    newsController.openDetailNews(news);
+                    Get.toNamed(Routes.NEWSDETAILCUSTOMER, arguments: news);
                   },
                   child: const Text("Lihat >"),
                   style: ElevatedButton.styleFrom(

@@ -86,7 +86,7 @@ class CartcustomerView extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              _showDeleteConfirmation(product);
+              cartController.showDeleteConfirmation(product);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -149,97 +149,6 @@ class CartcustomerView extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-
-  // ✅ Dialog Konfirmasi Hapus
-  void _showDeleteConfirmation(CartItem product) {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // **Warning Icon**
-            const Icon(Icons.warning_amber_rounded,
-                color: Colors.red, size: 50),
-            const SizedBox(height: 10),
-
-            // **Title**
-            const Text(
-              "Hapus Item dari Keranjang?",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
-            ),
-            const SizedBox(height: 8),
-
-            // **Subtitle**
-            const Text(
-              "Anda yakin ingin menghapus item ini dari keranjang?",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black54),
-            ),
-            const SizedBox(height: 20),
-
-            // **Action Buttons**
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // **Cancel Button**
-                Expanded(
-                  child: TextButton(
-                    onPressed: () => Get.back(),
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      backgroundColor: Colors.grey[300],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      "Batal",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-
-                // **Delete Button**
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      cartController.removeFromCart(product);
-                      Get.back();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      "Hapus",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      isDismissible: true,
     );
   }
 

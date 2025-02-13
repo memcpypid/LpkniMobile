@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class VerifotpcustomerController extends GetxController {
   final List<TextEditingController> otpControllers =
@@ -29,7 +30,8 @@ class VerifotpcustomerController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offNamed('/home'); // Navigasi ke halaman utama setelah verifikasi
+      Get.toNamed(Routes
+          .RESETPASSWORDCUSTOMER); // Navigasi ke halaman utama setelah verifikasi
     } else {
       Get.snackbar(
         'Error',

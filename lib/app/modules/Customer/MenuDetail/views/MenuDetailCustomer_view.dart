@@ -29,7 +29,11 @@ class MenudetailcustomerView extends StatelessWidget {
             top: 40,
             left: 15,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 30,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -45,6 +49,7 @@ class MenudetailcustomerView extends StatelessWidget {
                       ? Icons.favorite
                       : Icons.favorite_border,
                   color: Colors.red,
+                  size: 30,
                 ),
                 onPressed: controller.toggleFavorite,
               );
@@ -85,7 +90,6 @@ class MenudetailcustomerView extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       // ✅ Rating & Terjual
                       Row(
                         children: [
@@ -96,7 +100,6 @@ class MenudetailcustomerView extends StatelessWidget {
                               style: TextStyle(fontSize: 14)),
                         ],
                       ),
-
                       // ✅ Harga
                       Row(
                         children: [

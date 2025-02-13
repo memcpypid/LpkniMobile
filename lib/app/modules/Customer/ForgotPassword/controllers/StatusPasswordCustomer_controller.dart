@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class StatuspasswordcustomerController extends GetxController {
   var isSuccess = true.obs;
@@ -8,6 +9,6 @@ class StatuspasswordcustomerController extends GetxController {
   }
 
   void proceed() {
-    Get.offAllNamed('/login');
+    Get.offAllNamed(Routes.LOGINCUSTOMER);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class ResetpasswordcustomerController extends GetxController {
   final TextEditingController newPasswordController = TextEditingController();
@@ -52,6 +53,6 @@ class ResetpasswordcustomerController extends GetxController {
       colorText: Colors.white,
     );
 
-    Get.offNamed('/login');
+    Get.offAllNamed(Routes.STATUSRESETPASSWORDCUSTOMER);
   }
 }

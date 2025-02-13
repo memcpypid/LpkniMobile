@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lpkni/app/data/Customer/Model/cart_model.dart';
@@ -22,6 +23,97 @@ class CartcustomerController extends GetxController {
     super.onInit();
     loadCartFromStorage(); // ✅ Load data dari local storage saat controller dimulai
     calculateTotal();
+  }
+
+// ✅ Dialog Konfirmasi Hapus
+  void showDeleteConfirmation(CartItem product) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // **Warning Icon**
+            const Icon(Icons.warning_amber_rounded,
+                color: Colors.red, size: 50),
+            const SizedBox(height: 10),
+
+            // **Title**
+            const Text(
+              "Hapus Item dari Keranjang?",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87),
+            ),
+            const SizedBox(height: 8),
+
+            // **Subtitle**
+            const Text(
+              "Anda yakin ingin menghapus item ini dari keranjang?",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black54),
+            ),
+            const SizedBox(height: 20),
+
+            // **Action Buttons**
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // **Cancel Button**
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.back(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.grey[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Batal",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+
+                // **Delete Button**
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      removeFromCart(product);
+                      Get.back();
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Hapus",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      isDismissible: true,
+    );
   }
 
   // ✅ Tambahkan item ke keranjang dari FoodItem
@@ -100,7 +192,6 @@ class CartcustomerController extends GetxController {
   void calculateTotal() {
     subtotal.value = cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
     totalAmount.value = subtotal.value + deliveryFee.value - discount.value;
-
     // ✅ Hanya hitung total harga dari item yang dipilih
     selectedSubtotal.value =
         selectedItems.fold(0.0, (sum, item) => sum + item.totalPrice);

@@ -17,7 +17,7 @@ class MenumerchantController extends GetxController {
 
   // 🔹 Load Data dari Local Storage
   void loadFoodData() {
-    List<String>? storedFood = storage.read<List<String>>("foodList");
+    List<dynamic>? storedFood = storage.read<List<dynamic>>("foodList");
     if (storedFood != null) {
       foodList.assignAll(storedFood
           .map((item) => FoodItem.fromJson(jsonDecode(item)))

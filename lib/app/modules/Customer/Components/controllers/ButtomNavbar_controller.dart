@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class ButtomnavbarController extends GetxController {
   final box = GetStorage();
@@ -18,19 +19,20 @@ class ButtomnavbarController extends GetxController {
       box.write('selectedIndex', index); // Simpan state navbar
       switch (index) {
         case 0:
-          Get.offNamed('/home');
+          Get.offAllNamed(Routes.HOMECUSTOMER);
           break;
         case 1:
-          Get.offNamed('/menu');
+          Get.offAllNamed(Routes.MENUCUSTOMER);
           break;
         case 2:
-          Get.offNamed('/cart');
+          Get.offAllNamed(Routes.CARTCUSTOMER);
           break;
         case 3:
-          Get.offNamed('/profile');
+          Get.offAllNamed(Routes.PROFILECUSTOMER);
           break;
         default:
-          Get.offNamed('/home');
+          Get.offAllNamed(Routes.HOMECUSTOMER);
+          break;
       }
     }
   }

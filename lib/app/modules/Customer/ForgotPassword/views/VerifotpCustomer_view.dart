@@ -8,6 +8,7 @@ class VerifotpcustomerView extends GetView<VerifotpcustomerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/Register/controllers/RegisterCustomer_controller.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class RegistercustomerView extends GetView<RegistercustomerController> {
   const RegistercustomerView({super.key});
@@ -8,6 +9,7 @@ class RegistercustomerView extends GetView<RegistercustomerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -87,7 +89,7 @@ class RegistercustomerView extends GetView<RegistercustomerController> {
             const SizedBox(height: 20),
             Center(
               child: GestureDetector(
-                onTap: () => Get.toNamed('/login'),
+                onTap: () => Get.toNamed(Routes.LOGINCUSTOMER),
                 child: const Text(
                   'Sudah punya akun? Masuk',
                   style: TextStyle(color: Colors.teal, fontSize: 16),

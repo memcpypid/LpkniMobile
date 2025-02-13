@@ -1,4 +1,4 @@
-class UserProfile {
+  class UserProfile {
   final String name;
   final String email;
   final String profileImage;
@@ -13,7 +13,7 @@ class UserProfile {
     required this.language,
     this.pushNotification = true,
     this.announcementNotification = false,
-  });
+  }); 
 
   // Convert to JSON
   Map<String, dynamic> toJson() {

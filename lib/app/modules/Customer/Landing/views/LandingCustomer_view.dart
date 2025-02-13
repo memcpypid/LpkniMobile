@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/Landing/controllers/LandingCustomer_controller.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class LandingcustomerView extends GetView<LandingcustomerController> {
   const LandingcustomerView({super.key});
@@ -8,6 +9,12 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.offAllNamed(Routes.ONBOARDING),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,7 +64,7 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed('/login');
+                    Get.toNamed(Routes.LOGINCUSTOMER);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,

@@ -4,18 +4,27 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   /* Initialize*/
-  static const ONBOARDING1 = _Paths.ONBOARDING1;
-  static const ONBOARDING2 = _Paths.ONBOARDING2;
+  static const ONBOARDING = _Paths.ONBOARDING;
   /*Customer*/
-  static const HOME = _Paths.HOMECUSTOMER;
-  static const MENU = _Paths.MENUCUSTOMER;
-  static const MENUDETAIL = _Paths.MENUDETAIL;
-  static const NEWSDETAIL = _Paths.NEWSDETAIL;
-  static const CART = _Paths.CARTCUSTOMER;
-  static const CHATLIST = _Paths.CHATLISTCUSTOMER;
-  static const ROOMCHAT = _Paths.ROOMCHATCUSTOMER;
-  static const NOTIFICATION = _Paths.NOTIFICATIONCUSTOMER;
-  static const PROFILE = _Paths.PROFILECUSTOMER;
+  static const HOMECUSTOMER = _Paths.HOMECUSTOMER;
+  static const MENUCUSTOMER = _Paths.MENUCUSTOMER;
+  static const MENUDETAILCUSTOMER = _Paths.MENUDETAILCUSTOMER;
+  static const NEWSDETAILCUSTOMER = _Paths.NEWSDETAILCUSTOMER;
+  static const CARTCUSTOMER = _Paths.CARTCUSTOMER;
+  static const CHATLISTCUSTOMER = _Paths.CHATLISTCUSTOMER;
+  static const ROOMCHATCUSTOMER = _Paths.ROOMCHATCUSTOMER;
+  static const NOTIFICATIONCUSTOMER = _Paths.NOTIFICATIONCUSTOMER;
+  static const PROFILECUSTOMER = _Paths.PROFILECUSTOMER;
+  /*Landing Customer*/
+  static const LANDINGCUSTOMER = _Paths.LANDINGCUSTOMER;
+  /*Auth Customer*/
+  static const REGISTERCUSTOMER = _Paths.REGISTERCUSTOMER;
+  static const LOGINCUSTOMER = _Paths.LOGINCUSTOMER;
+  static const FORGOTPASSWORDCUSTOMER = _Paths.FORGOTPASSWORDCUSTOMER;
+  static const OTPPASSWORDCUSTOMER = _Paths.OTPPASSWORDCUSTOMER;
+  static const RESETPASSWORDCUSTOMER = _Paths.RESETPASSWORDCUSTOMER;
+  static const STATUSRESETPASSWORDCUSTOMER = _Paths.STATUSRESETPASSWORDCUSTOMER;
+
   /*Merchant*/
   static const HOMEMERCHANT = _Paths.HOMEMERCHANT;
   static const MENUMERCHANT = _Paths.MENUMERCHANT;
@@ -30,18 +39,25 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   /* Initialize*/
-  static const ONBOARDING1 = '/onboard1';
-  static const ONBOARDING2 = '/onboard2';
-
+  static const ONBOARDING = '/onboarding';
   /*Customer*/
+  static const LANDINGCUSTOMER = '/landing-customer';
+  /*Auth Customer*/
+  static const REGISTERCUSTOMER = '/register-customer';
+  static const LOGINCUSTOMER = '/login-customer';
+  static const FORGOTPASSWORDCUSTOMER = '/forgotpassword-customer';
+  static const OTPPASSWORDCUSTOMER = '/otpverifikasi-customer';
+  static const RESETPASSWORDCUSTOMER = '/resetpassword-customer';
+  static const STATUSRESETPASSWORDCUSTOMER = '/statusresetpassword-customer';
+  /*Menu Customer*/
   static const HOMECUSTOMER = '/home-customer';
   static const MENUCUSTOMER = '/menu-customer';
   static const PROFILECUSTOMER = '/profile-customer';
   static const CARTCUSTOMER = '/cart-customer';
   static const CHATLISTCUSTOMER = '/chat-list-customer';
   static const ROOMCHATCUSTOMER = '/chat-room-customer';
-  static const MENUDETAIL = '/menu-detail';
-  static const NEWSDETAIL = '/news-detail';
+  static const MENUDETAILCUSTOMER = '/menu-detail-customer';
+  static const NEWSDETAILCUSTOMER = '/news-detail-customer';
   static const NOTIFICATIONCUSTOMER = '/notification-customer';
 
   /*Merchant*/

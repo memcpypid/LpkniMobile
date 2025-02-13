@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/Chat/controllers/CustomerChat_controller.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class CustomerchatlistView extends StatelessWidget {
   final CustomerchatController chatController =
@@ -25,7 +26,8 @@ class CustomerchatlistView extends StatelessWidget {
           itemBuilder: (context, index) {
             final chat = chatController.chatList[index];
             return InkWell(
-              onTap: () => chatController.openChat(chat),
+              onTap: () =>
+                  Get.toNamed(Routes.ROOMCHATCUSTOMER, arguments: chat),
               splashColor: Colors.teal.withOpacity(0.1),
               child: Padding(
                 padding:

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:audioplayers/audioplayers.dart'; 
+import 'package:audioplayers/audioplayers.dart';
 
-// import 'package:lpkni/app/modules/home/views/home_view.dart';
-import 'package:lpkni/app/modules/onBoarding/views/onBoarding_view.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(Duration(seconds: 5));
-    Get.offAll(() => OnboardingView());
+    Get.offAllNamed(Routes.ONBOARDING);
   }
 
   @override
@@ -49,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
 
           /// **Teks atau Logo bisa ditambahkan di sini jika perlu**
-
         ],
       ),
     );

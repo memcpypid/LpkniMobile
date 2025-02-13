@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lpkni/app/data/Customer/Model/CustomerProfile_model.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class CustomerprofileController extends GetxController {
   final box = GetStorage();
@@ -36,5 +37,10 @@ class CustomerprofileController extends GetxController {
 
   void saveProfile() {
     box.write("userProfile", user2.value.toJson());
+  }
+
+  void Logout() {
+    Get.offAllNamed(Routes.ONBOARDING);
+    box.remove('selectedIndex');
   }
 }

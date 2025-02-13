@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpkni/app/routes/app_pages.dart';
 
 class LogincustomerController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -17,23 +18,23 @@ class LogincustomerController extends GetxController {
     String password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      Get.snackbar('Error', 'Email dan password harus diisi',
+      Get.snackbar('Kesalahan', 'Email dan password harus diisi',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.teal,
           colorText: Colors.white);
       return;
     }
 
     // Simulasi login
-    if (email == 'user@example.com' && password == 'password123') {
+    if (email == 'user@mail.com' && password == 'user') {
       Get.snackbar('Success', 'Login berhasil',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.green,
           colorText: Colors.white);
       // Navigate to Home Page
-      Get.offNamed('/home');
+      Get.offAllNamed(Routes.HOMECUSTOMER);
     } else {
-      Get.snackbar('Error', 'Email atau password salah',
+      Get.snackbar('Kesalahan', 'Email atau password salah',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
