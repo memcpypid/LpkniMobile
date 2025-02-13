@@ -82,11 +82,15 @@ class HomemerchantView extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.message, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed('/chat-list-merchant');
+            },
           ),
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed('/notification-merchant');
+            },
           ),
         ],
       ),
@@ -183,7 +187,7 @@ class HomemerchantView extends StatelessWidget {
           onTap: () {
             switch (label) {
               case 'Menu':
-                Get.to(() => MenumerchantView());
+                Get.toNamed('/menu-merchant');
                 print(label);
                 break;
               case 'Bahan':

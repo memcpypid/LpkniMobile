@@ -6,12 +6,12 @@ import 'package:lpkni/app/data/Merchant/Model/Merchantfood_model.dart';
 import 'package:lpkni/app/modules/Merchant/Menu/controllers/MenuMerchant_controller.dart';
 import 'package:uuid/uuid.dart';
 
-class FoodFormView extends StatelessWidget {
+class MenumerchanteditView extends StatelessWidget {
   final MenumerchantController foodController = Get.find();
   final FoodItem? food;
   final _formKey = GlobalKey<FormState>();
 
-  FoodFormView({super.key, this.food});
+  MenumerchanteditView({super.key, this.food});
 
   @override
   Widget build(BuildContext context) {

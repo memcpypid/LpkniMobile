@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lpkni/app/data/Merchant/Model/Merchantfood_model.dart';
 import 'package:lpkni/app/modules/Merchant/Menu/controllers/MenuMerchant_controller.dart';
-import 'package:lpkni/app/modules/Merchant/Menu/views/MenuMerchantEdit_view.dart';
 
 class MenumerchantView extends StatelessWidget {
   final MenumerchantController foodController =
@@ -26,7 +25,9 @@ class MenumerchantView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,
         child: const Icon(Icons.add, color: Colors.white),
-        onPressed: () => Get.to(() => FoodFormView()),
+        onPressed: () {
+          Get.toNamed('/add-menu-merchant');
+        },
       ),
     );
   }
@@ -203,7 +204,8 @@ class MenumerchantView extends StatelessWidget {
                     children: [
                       // ✅ Tombol Edit dengan efek hover
                       InkWell(
-                        onTap: () => Get.to(() => FoodFormView(food: food)),
+                        onTap: () =>
+                            Get.toNamed('/edit-menu-merchant', arguments: food),
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
