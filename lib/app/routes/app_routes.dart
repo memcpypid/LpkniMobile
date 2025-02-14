@@ -34,6 +34,15 @@ abstract class Routes {
   static const CHATLISTMERCHANT = _Paths.CHATLISTMERCHANT;
   static const ROOMCHATMERCHANT = _Paths.ROOMCHATMERCHANT;
   static const NOTIFICATIONMERCHANT = _Paths.NOTIFICATIONMERCHANT;
+  /*Landing Merchant*/
+  static const LANDINGMERCHANT = _Paths.LANDINGMERCHANT;
+  /*Auth Customer*/
+  static const REGISTERMERCHANT = _Paths.REGISTERMERCHANT;
+  static const LOGINMERCHANT = _Paths.LOGINMERCHANT;
+  static const FORGOTPASSWORDMERCHANT = _Paths.FORGOTPASSWORDMERCHANT;
+  static const OTPPASSWORDMERCHANT = _Paths.OTPPASSWORDMERCHANT;
+  static const RESETPASSWORDMERCHANT = _Paths.RESETPASSWORDMERCHANT;
+  static const STATUSRESETPASSWORDMERCHANT = _Paths.STATUSRESETPASSWORDMERCHANT;
 }
 
 abstract class _Paths {
@@ -61,6 +70,15 @@ abstract class _Paths {
   static const NOTIFICATIONCUSTOMER = '/notification-customer';
 
   /*Merchant*/
+  static const LANDINGMERCHANT = '/landing-merchant';
+  /*Auth Merhant*/
+  static const REGISTERMERCHANT = '/register-merchant';
+  static const LOGINMERCHANT = '/login-merchant';
+  static const FORGOTPASSWORDMERCHANT = '/forgotpassword-merchant';
+  static const OTPPASSWORDMERCHANT = '/otpverifikasi-merchant';
+  static const RESETPASSWORDMERCHANT = '/resetpassword-merchant';
+  static const STATUSRESETPASSWORDMERCHANT = '/statusresetpassword-merchant';
+  /*Menu Merchant*/
   static const HOMEMERCHANT = '/home-merchant';
   static const MENUMERCHANT = '/menu-merchant';
   static const ADDMENUMERCHANT = '/add-menu-merchant';

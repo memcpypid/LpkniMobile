@@ -33,13 +33,25 @@ import 'package:lpkni/app/modules/Customer/Register/views/RegisterCustomer_view.
 import 'package:lpkni/app/modules/Merchant/Chat/bindings/MerchantChat_binding.dart';
 import 'package:lpkni/app/modules/Merchant/Chat/views/MerchantChatList_view.dart';
 import 'package:lpkni/app/modules/Merchant/Chat/views/MerchantRoomChat_view.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/ForgotMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/StatusPasswordMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/VerifotpMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/ForgotMerchant_view.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/StatusPasswordMerchant_view.dart';
+import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/VerifotpMerchant_view.dart';
 import 'package:lpkni/app/modules/Merchant/Home/bindings/HomeMerchant_binding.dart';
 import 'package:lpkni/app/modules/Merchant/Home/views/HomeMerchant_view.dart';
+import 'package:lpkni/app/modules/Merchant/Landing/bindings/LandingMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/Landing/views/LandingMerchant_view.dart';
+import 'package:lpkni/app/modules/Merchant/Login/bindings/loginMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/Login/views/loginMerchant_view.dart';
 import 'package:lpkni/app/modules/Merchant/Menu/bindings/MenuMerchant_binding.dart';
 import 'package:lpkni/app/modules/Merchant/Menu/views/MenuMerchantEdit_view.dart';
 import 'package:lpkni/app/modules/Merchant/Menu/views/MenuMerchant_view.dart';
 import 'package:lpkni/app/modules/Merchant/Notification/bindings/notificationMerchant_binding.dart';
 import 'package:lpkni/app/modules/Merchant/Notification/views/notificationMerchant_view.dart';
+import 'package:lpkni/app/modules/Merchant/Register/bindings/RegisterMerchant_binding.dart';
+import 'package:lpkni/app/modules/Merchant/Register/views/RegisterMerchant_view.dart';
 import 'package:lpkni/app/modules/onBoarding/bindings/onBoarding_binding.dart';
 import 'package:lpkni/app/modules/onBoarding/views/onBoarding_view.dart';
 part 'app_routes.dart';
@@ -47,7 +59,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOMECUSTOMER;
+  static const INITIAL = Routes.ONBOARDING;
 
   static final routes = [
     GetPage(
@@ -143,6 +155,41 @@ class AppPages {
       binding: CustomerprofileBinding(),
     ),
     /*------------------- Merchant ---------------------------*/
+    GetPage(
+      name: _Paths.LANDINGMERCHANT,
+      page: () => LandingmerchantView(),
+      binding: LandingmerchantBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTERMERCHANT,
+      page: () => RegistermerchantView(),
+      binding: RegistermerchantBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGINMERCHANT,
+      page: () => LoginmerchantView(),
+      binding: LoginmerchantBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOTPASSWORDMERCHANT,
+      page: () => ForgotmerchantView(),
+      binding: ForgotmerchantBinding(),
+    ),
+    GetPage(
+      name: _Paths.OTPPASSWORDMERCHANT,
+      page: () => VerifotpmerchantView(),
+      binding: VerifotpmerchantBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESETPASSWORDMERCHANT,
+      page: () => ResetpasswordcustomerView(),
+      binding: ResetpasswordcustomerBinding(),
+    ),
+    GetPage(
+      name: _Paths.STATUSRESETPASSWORDMERCHANT,
+      page: () => StatuspasswordmerchantView(),
+      binding: StatuspasswordmerchantBinding(),
+    ),
     GetPage(
       name: _Paths.HOMEMERCHANT,
       page: () => HomemerchantView(),

@@ -73,7 +73,7 @@ class OnboardingController extends GetxController {
         Get.toNamed(Routes.LANDINGCUSTOMER);
         break;
       case 'Pemilik Warung':
-        Get.toNamed(Routes.HOMEMERCHANT);
+        Get.toNamed(Routes.LANDINGMERCHANT);
         break;
       // case 'Grosir':
       //   Get.toNamed(Routes.GROSIR_PAGE);

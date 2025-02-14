@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:lpkni/app/modules/Customer/Landing/controllers/LandingCustomer_controller.dart';
 import 'package:lpkni/app/routes/app_pages.dart';
 
-class LandingcustomerView extends GetView<LandingcustomerController> {
-  const LandingcustomerView({super.key});
+class LandingmerchantView extends GetView<LandingcustomerController> {
+  const LandingmerchantView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Customer',
+          'Merchant',
           style: TextStyle(
               fontSize: 25, fontWeight: FontWeight.bold, color: Colors.teal),
         ),
@@ -71,7 +71,7 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(Routes.LOGINCUSTOMER);
+                    Get.toNamed(Routes.LOGINMERCHANT);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,

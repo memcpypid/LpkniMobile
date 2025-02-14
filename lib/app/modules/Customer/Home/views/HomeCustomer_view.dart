@@ -35,8 +35,10 @@ class HomecustomerView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSectionTitle(
-                    "Baru Hari Ini", 'Makanan baru hari ini', () {}),
+                _buildSectionTitle("Baru Hari Ini", 'Makanan baru hari ini',
+                    () {
+                  print('semua Makanan Baru Hari ini');
+                }),
                 _buildHorizontalProductList(),
                 _buildSectionTitle("Berita", 'Berita Baru Hari ini', () {}),
                 _buildHorizontalNewsList(),
@@ -88,7 +90,7 @@ class HomecustomerView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 5),
+              // const SizedBox(width: 2),
               badges.Badge(
                 badgeContent: Text(
                   transaction > 9
@@ -111,7 +113,7 @@ class HomecustomerView extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(width: 5),
+              // const SizedBox(width: 5),
               // Pesan (Dengan Badge)
               badges.Badge(
                 badgeContent: Text(
@@ -135,7 +137,7 @@ class HomecustomerView extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(width: 5),
+              // const SizedBox(width: 5),
               // Notifikasi (Dengan Badge)
               badges.Badge(
                 badgeContent: Text(
