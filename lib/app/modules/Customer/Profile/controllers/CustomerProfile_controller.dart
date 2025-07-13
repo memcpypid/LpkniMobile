@@ -40,6 +40,12 @@ class CustomerprofileController extends GetxController {
   }
 
   void Logout() {
+    box.write('isLoggedIn', false);
+
+    if(!box.read('rememberMe')){
+      box.remove('email');
+    }
+
     Get.offAllNamed(Routes.ONBOARDING);
     box.remove('selectedIndex');
   }

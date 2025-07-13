@@ -5,6 +5,7 @@ import 'package:lpkni/app/routes/app_pages.dart';
 
 class LogincustomerView extends GetView<LogincustomerController> {
   const LogincustomerView({super.key});
+  // LogincustomerController controller = LogincustomerController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class LogincustomerView extends GetView<LogincustomerController> {
                           },
                           child: const Text(
                             'Lupa password?',
-                            style: TextStyle(color: Colors.teal),
+                            style: TextStyle(color: Color(0xFF86AEFF)),
                           ),
                         ),
                       ],
@@ -103,7 +104,7 @@ class LogincustomerView extends GetView<LogincustomerController> {
                       child: ElevatedButton(
                         onPressed: controller.login,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal,
+                          backgroundColor: const Color(0xFF86AEFF),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -125,7 +126,7 @@ class LogincustomerView extends GetView<LogincustomerController> {
                         },
                         child: const Text(
                           'Belum punya akun? Daftar',
-                          style: TextStyle(color: Colors.teal, fontSize: 16),
+                          style: TextStyle(color: Color(0xFF86AEFF), fontSize: 16),
                         ),
                       ),
                     ),

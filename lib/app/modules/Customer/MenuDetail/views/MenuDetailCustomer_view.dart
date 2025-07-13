@@ -83,7 +83,7 @@ class MenudetailcustomerView extends StatelessWidget {
                                 fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.chat, color: Colors.green),
+                            icon: const Icon(Icons.chat, color: Color(0xFF86AEFF)),
                             onPressed: () {
                               // TODO: Navigasi ke Chat
                             },
@@ -108,7 +108,7 @@ class MenudetailcustomerView extends StatelessWidget {
                             style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.green),
+                                color: Color(0xFF1E56A0)),
                           ),
                           const SizedBox(width: 10),
                           Text(
@@ -160,7 +160,7 @@ class MenudetailcustomerView extends StatelessWidget {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.remove_circle_outline,
-                                    color: Colors.green),
+                                    color: Color(0xFF86AEFF)),
                                 onPressed: controller.decreaseQuantity,
                               ),
                               Obx(() {
@@ -170,7 +170,7 @@ class MenudetailcustomerView extends StatelessWidget {
                               }),
                               IconButton(
                                 icon: const Icon(Icons.add_circle_outline,
-                                    color: Colors.green),
+                                    color: Color(0xFF86AEFF)),
                                 onPressed: controller.increaseQuantity,
                               ),
                             ],
@@ -186,7 +186,7 @@ class MenudetailcustomerView extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: const Color(0xFF86AEFF),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),

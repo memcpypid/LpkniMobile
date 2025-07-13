@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpkni/app/modules/Customer/Landing/views/LandingCustomer_view.dart';
+import 'package:lpkni/app/modules/Customer/Login/views/loginCustomer_view.dart';
 import 'package:lpkni/app/modules/onBoarding/views/onBoardingSelection_view.dart';
 import 'package:lpkni/app/routes/app_pages.dart';
 
@@ -57,8 +59,11 @@ class OnboardingController extends GetxController {
       pageController.nextPage(
           duration: Duration(milliseconds: 500), curve: Curves.ease);
     } else {
-      Get.off(
-          OnboardingselectionView()); // Setelah halaman terakhir, langsung ke Home
+      Get.toNamed(Routes.LANDINGCUSTOMER);
+      // Get.off(
+          // OnboardingselectionView()); // Setelah halaman terakhir, langsung ke Home
+          // LandingcustomerView());
+          // LogincustomerView());
     }
   }
 

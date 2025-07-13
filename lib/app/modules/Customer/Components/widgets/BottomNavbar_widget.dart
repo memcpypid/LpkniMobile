@@ -48,7 +48,7 @@ class BottomNavBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: isSelected
             ? BoxDecoration(
-                color: Colors.teal,
+                color: const Color(0xFF86AEFF),
                 borderRadius: BorderRadius.circular(30),
               )
             : null,
@@ -57,7 +57,7 @@ class BottomNavBar extends StatelessWidget {
             Icon(
               icon,
               size: 28,
-              color: isSelected ? Colors.white : Colors.teal,
+              color: isSelected ? Colors.white : const Color(0xFF86AEFF),
             ),
             if (isSelected)
               const SizedBox(width: 8), // Spacer between icon and text

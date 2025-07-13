@@ -75,7 +75,7 @@ class RegistercustomerView extends GetView<RegistercustomerController> {
               child: ElevatedButton(
                 onPressed: controller.signUp,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+                  backgroundColor: Color(0xFF86AEFF),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -92,7 +92,7 @@ class RegistercustomerView extends GetView<RegistercustomerController> {
                 onTap: () => Get.toNamed(Routes.LOGINCUSTOMER),
                 child: const Text(
                   'Sudah punya akun? Masuk',
-                  style: TextStyle(color: Colors.teal, fontSize: 16),
+                  style: TextStyle(color: Color(0xFF86AEFF), fontSize: 16),
                 ),
               ),
             ),

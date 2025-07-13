@@ -13,7 +13,7 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
         title: Text(
           'Customer',
           style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.teal),
+              fontSize: 25, fontWeight: FontWeight.bold, color: const Color(0xFF86AEFF)),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -28,7 +28,8 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
           Expanded(
             child: Center(
               child: Image.asset(
-                'assets/images/logoHijau.png',
+                // 'assets/images/logoHijau.png',
+                'assets/images/qmas-logo.png',
                 width: 200,
               ),
             ),
@@ -43,7 +44,7 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.teal,
+                    color: const Color(0xFF86AEFF),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -74,13 +75,33 @@ class LandingcustomerView extends GetView<LandingcustomerController> {
                     Get.toNamed(Routes.LOGINCUSTOMER);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
+                    backgroundColor: const Color(0xFF86AEFF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child: const Text(
                     'Masuk',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: 380,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.REGISTERCUSTOMER);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF86AEFF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Daftar',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),

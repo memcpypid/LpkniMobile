@@ -9,25 +9,36 @@ import 'package:lpkni/app/modules/Customer/Menu/Controllers/CustomerMenu_control
 import 'package:lpkni/app/routes/app_pages.dart';
 
 class CustomermenuView extends StatelessWidget {
-  final CustomermenuController menuController =
-      Get.find<CustomermenuController>();
-  final ButtomnavbarController navbarController =
-      Get.find<ButtomnavbarController>();
-  final CartcustomerController cartController =
-      Get.find<CartcustomerController>();
+  final CustomermenuController menuController = Get.find<CustomermenuController>();
+  final ButtomnavbarController navbarController = Get.find<ButtomnavbarController>();
+  final CartcustomerController cartController = Get.find<CartcustomerController>();
+
+  // Warna tema air mineral
+  final Color primaryBlue = Color(0xFF86AEFF);
+  final Color lightBlue = Color(0xFFB3D9FF);
+  final Color darkBlue = Color(0xFF4A90E2);
+  final Color accentBlue = Color(0xFF1E56A0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _buildAppBar(),
+      backgroundColor: Color(0xFFF8FBFF),
       body: RefreshIndicator(
         onRefresh: _refreshData,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSearchBar(),
-            const SizedBox(height: 10),
-            _buildMenuGrid(), // ✅ Pakai Expanded agar bisa scroll
+        color: primaryBlue,
+        backgroundColor: Colors.white,
+        child: CustomScrollView(
+          slivers: [
+            _buildModernSliverAppBar(),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  _buildSearchAndFilter(),
+                  // SizedBox(height: 16), // Dihapus karena kategori tidak ada
+                ],
+              ),
+            ),
+            _buildProductGrid(),
           ],
         ),
       ),
@@ -35,250 +46,543 @@ class CustomermenuView extends StatelessWidget {
     );
   }
 
-  // ✅ Fungsi Refresh (Tarik ke Bawah untuk Reload Data)
   Future<void> _refreshData() async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulasi loading
-    menuController.loadMenu(); // Ambil ulang data dari controller
+    await Future.delayed(const Duration(seconds: 2));
+    menuController.loadMenu();
   }
 
-  // AppBar
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
+  Widget _buildModernSliverAppBar() {
+    return SliverAppBar(
+      expandedHeight: 120,
+      floating: false,
+      pinned: true,
       elevation: 0,
-      // leading: IconButton(
-      //   icon: const Icon(Icons.arrow_back, color: Colors.black),
-      //   onPressed: () => Get.back(),
-      // ),
-      title: const Text(
-        "Specials For You",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+      backgroundColor: Colors.transparent,
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              primaryBlue,
+              darkBlue,
+            ],
+          ),
         ),
-      ),
-      centerTitle: true,
-    );
-  }
-
-  // Search Bar
-  Widget _buildSearchBar() {
-    return TextField(
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search, color: Colors.black54),
-        hintText: "Search",
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: Colors.green),
-        ),
-        // suffixIcon: const Icon(Icons.tune, color: Colors.green),
-      ),
-    );
-  }
-
-  // ✅ Grid untuk menampilkan menu (bisa di-scroll)
-  Widget _buildMenuGrid() {
-    return Expanded(
-      // ✅ Pastikan GridView bisa mengambil sisa ruang
-      child: Obx(() {
-        if (menuController.foodItems.isEmpty) {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                "Tidak ada produk terlaris",
-                style: TextStyle(fontSize: 16),
+        child: FlexibleSpaceBar(
+          centerTitle: true,
+          title: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.white.withOpacity(0.3)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.water_drop, color: Colors.white, size: 20),
+                SizedBox(width: 8),
+                Text(
+                  "Premium Water Collection",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          background: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  primaryBlue,
+                  darkBlue,
+                ],
               ),
             ),
+            child: Stack(
+              children: [
+                // Floating water drops decoration
+                ...List.generate(6, (index) => _buildFloatingWaterDrop(index)),
+              ],
+            ),
+          ),
+        ),
+      ),
+      leading: Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Get.back(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFloatingWaterDrop(int index) {
+    final positions = [
+      {'top': 20.0, 'left': 30.0},
+      {'top': 60.0, 'right': 40.0},
+      {'top': 40.0, 'left': 100.0},
+      {'top': 80.0, 'right': 80.0},
+      {'top': 30.0, 'right': 120.0},
+      {'top': 70.0, 'left': 200.0},
+    ];
+
+    return Positioned(
+      top: positions[index]['top'],
+      left: positions[index]['left'],
+      right: positions[index]['right'],
+      child: Icon(
+        Icons.water_drop,
+        color: Colors.white.withOpacity(0.1),
+        size: 16 + (index * 2),
+      ),
+    );
+  }
+
+  Widget _buildSearchAndFilter() {
+    return Container(
+      margin: EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryBlue.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: primaryBlue),
+                  hintText: "Cari air mineral favorit...",
+                  hintStyle: TextStyle(color: Colors.grey[400]),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 15),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 12),
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [primaryBlue, darkBlue],
+              ),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: primaryBlue.withOpacity(0.3),
+                  blurRadius: 8,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: Icon(Icons.tune, color: Colors.white),
+              onPressed: () {
+                // Filter functionality
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Widget _buildCategoryTabs() { // Dihapus karena tidak diperlukan
+  //   final categories = [
+  //     {'name': 'Semua', 'icon': Icons.water_drop},
+  //     {'name': 'Premium', 'icon': Icons.diamond},
+  //     {'name': 'Regular', 'icon': Icons.local_drink},
+  //     {'name': 'Gallon', 'icon': Icons.water_drop_outlined},
+  //   ];
+
+  //   return Container(
+  //     height: 60,
+  //     child: ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       padding: EdgeInsets.symmetric(horizontal: 16),
+  //       itemCount: categories.length,
+  //       itemBuilder: (context, index) {
+  //         final category = categories[index];
+  //         final isSelected = index == 0; // Default first selected
+
+  //         return Container(
+  //           margin: EdgeInsets.only(right: 12),
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               // Category selection logic
+  //             },
+  //             child: Container(
+  //               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+  //               decoration: BoxDecoration(
+  //                 gradient: isSelected
+  //                   ? LinearGradient(colors: [primaryBlue, darkBlue])
+  //                   : null,
+  //                 color: isSelected ? null : Colors.white,
+  //                 borderRadius: BorderRadius.circular(25),
+  //                 border: Border.all(
+  //                   color: isSelected ? Colors.transparent : primaryBlue.withOpacity(0.3),
+  //                 ),
+  //                 boxShadow: [
+  //                   BoxShadow(
+  //                     color: isSelected
+  //                       ? primaryBlue.withOpacity(0.3)
+  //                       : Colors.grey.withOpacity(0.1),
+  //                     blurRadius: 8,
+  //                     offset: Offset(0, 2),
+  //                   ),
+  //                 ],
+  //               ),
+  //               child: Row(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 children: [
+  //                   Icon(
+  //                     category['icon'] as IconData,
+  //                     color: isSelected ? Colors.white : primaryBlue,
+  //                     size: 18,
+  //                   ),
+  //                   SizedBox(width: 8),
+  //                   Text(
+  //                     category['name'] as String,
+  //                     style: TextStyle(
+  //                       color: isSelected ? Colors.white : primaryBlue,
+  //                       fontWeight: FontWeight.w600,
+  //                       fontSize: 14,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  Widget _buildProductGrid() {
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      sliver: Obx(() {
+        if (menuController.foodItems.isEmpty) {
+          return SliverToBoxAdapter(
+            child: _buildEmptyState(),
           );
         }
 
-        return GridView.builder(
-          padding: const EdgeInsets.only(bottom: 20),
-          physics: const AlwaysScrollableScrollPhysics(), // ✅ Bisa di-scroll
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        return SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.5,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.48,
           ),
-          itemCount: menuController.foodItems.length,
-          itemBuilder: (context, index) {
-            final product = menuController.foodItems[index];
-            return _buildProductItem(product);
-          },
+          delegate: SliverChildBuilderDelegate(
+                (context, index) {
+              final product = menuController.foodItems[index];
+              return _buildModernProductCard(product, index);
+            },
+            childCount: menuController.foodItems.length,
+          ),
         );
       }),
     );
   }
 
-  // Widget kartu makanan
-  Widget _buildProductItem(FoodItem product, {bool isHorizontal = false}) {
-    final CartcustomerController cartController =
-        Get.find<CartcustomerController>(); // ✅ Ambil CartController
+  Widget _buildEmptyState() {
+    return Container(
+      height: 300,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: lightBlue.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.water_drop_outlined,
+              size: 50,
+              color: primaryBlue,
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            "Belum Ada Produk",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: darkBlue,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            "Produk air mineral akan segera hadir",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-    return SizedBox(
-      width: isHorizontal ? 170 : null,
-      child: GestureDetector(
-        onTap: () {
-          // 🔥 Navigasi ke Menu Detail
-          Get.toNamed(Routes.MENUDETAILCUSTOMER, arguments: product);
-        },
-        child: Card(
-          elevation: 4,
-          color: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Gambar Produk
-              ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.asset(
-                  product.image,
-                  width: double.infinity,
-                  height: 170,
-                  fit: BoxFit.cover,
+  Widget _buildModernProductCard(FoodItem product, int index) {
+    return TweenAnimationBuilder(
+      duration: Duration(milliseconds: 300 + (index * 100)),
+      tween: Tween<double>(begin: 0, end: 1),
+      builder: (context, double value, child) {
+        return Transform.translate(
+          offset: Offset(0, 50 * (1 - value)),
+          child: Opacity(
+            opacity: value,
+            child: GestureDetector(
+              onTap: () => Get.toNamed(Routes.MENUDETAILCUSTOMER, arguments: product),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primaryBlue.withOpacity(0.1),
+                      blurRadius: 15,
+                      offset: Offset(0, 8),
+                    ),
+                  ],
                 ),
-              ),
-
-              // Isi Produk (Nama, Rating, Harga, Deskripsi)
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Nama Produk
-                      Text(
-                        product.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-
-                      // ⭐ Rating Produk
-                      Row(
-                        children: [
-                          RatingBarIndicator(
-                            rating: product.rating,
-                            itemBuilder: (context, index) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            itemCount: 5,
-                            itemSize: 16,
-                            direction: Axis.horizontal,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            product.rating.toStringAsFixed(1),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-
-                      // Harga Produk
-                      Row(
-                        children: [
-                          const Icon(Icons.local_offer,
-                              color: Colors.green, size: 15),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              product.price,
-                              style: const TextStyle(
-                                color: Colors.green,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-
-                      // Deskripsi Produk (Tidak Terpotong)
-                      Flexible(
-                        child: Text(
-                          product.Desc,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black26,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                    ],
-                  ),
-                ),
-              ),
-
-              // **Baris Bawah: Terjual & Tombol Keranjang**
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Jumlah Terjual di Kiri
-                    Text(
-                      '${product.soldCount} Terjual',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black38,
-                        fontSize: 13,
-                      ),
+                    // Image with gradient overlay
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          child: Image.asset(
+                            product.image,
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        // Rating badge
+                        Positioned(
+                          top: 12,
+                          right: 12,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.amber, Colors.orange],
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.amber.withOpacity(0.3),
+                                  blurRadius: 6,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star, color: Colors.white, size: 12),
+                                SizedBox(width: 2),
+                                Text(
+                                  product.rating.toStringAsFixed(1),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Water drop icon overlay
+                        Positioned(
+                          top: 12,
+                          left: 12,
+                          child: Container(
+                            padding: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.water_drop,
+                              color: primaryBlue,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
-                    // Tombol Keranjang di Kanan
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.shopping_cart_outlined,
-                            color: Colors.orange),
-                        onPressed: () {
-                          cartController
-                              .addToCart(product); // ✅ Tambahkan ke keranjang
-                        },
+                    // Product info
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Product name
+                            Text(
+                              product.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: darkBlue,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+
+                            // Price with modern styling
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [lightBlue.withOpacity(0.3), lightBlue.withOpacity(0.1)],
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                product.price,
+                                style: TextStyle(
+                                  color: accentBlue,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+
+                            // Description
+                            Expanded(
+                              child: Text(
+                                product.Desc,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 12,
+                                  height: 1.3,
+                                ),
+                              ),
+                            ),
+
+                            // Bottom section
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${product.soldCount} terjual',
+                                      style: TextStyle(
+                                        color: Colors.grey[500],
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(height: 2),
+                                    Row(
+                                      children: [
+                                        ...List.generate(5, (starIndex) {
+                                          return Icon(
+                                            starIndex < product.rating.floor()
+                                                ? Icons.star
+                                                : Icons.star_border,
+                                            color: Colors.amber,
+                                            size: 12,
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [primaryBlue, darkBlue],
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: primaryBlue.withOpacity(0.3),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(
+                                      Icons.add_shopping_cart,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    onPressed: () {
+                                      cartController.addToCart(product);
+                                      // Show snackbar
+                                      Get.snackbar(
+                                        "Berhasil!",
+                                        "${product.name} ditambahkan ke keranjang",
+                                        backgroundColor: primaryBlue.withOpacity(0.9),
+                                        colorText: Colors.white,
+                                        duration: Duration(seconds: 2),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        margin: EdgeInsets.all(16),
+                                        borderRadius: 12,
+                                        icon: Icon(Icons.check_circle, color: Colors.white),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

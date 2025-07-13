@@ -15,12 +15,12 @@ void showSuccessDialog() {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.teal.withOpacity(0.1),
+                color: const Color(0xFF86AEFF).withOpacity(0.1),
               ),
               padding: const EdgeInsets.all(20),
               child: const Icon(
                 Icons.check_circle,
-                color: Colors.teal,
+                color: Color(0xFF86AEFF),
                 size: 50,
               ),
             ),
@@ -53,7 +53,7 @@ void showSuccessDialog() {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+                  backgroundColor: const Color(0xFF86AEFF),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
                 ),

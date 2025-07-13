@@ -54,14 +54,22 @@ import 'package:lpkni/app/modules/Merchant/Register/bindings/RegisterMerchant_bi
 import 'package:lpkni/app/modules/Merchant/Register/views/RegisterMerchant_view.dart';
 import 'package:lpkni/app/modules/onBoarding/bindings/onBoarding_binding.dart';
 import 'package:lpkni/app/modules/onBoarding/views/onBoarding_view.dart';
+import 'package:lpkni/app/modules/splashScreen/bindings/splashScreen_binding.dart';
+import 'package:lpkni/app/modules/splashScreen/views/splashScreen_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.ONBOARDING;
+  // static const INITIAL = Routes.ONBOARDING;
+static const INITIAL = Routes.SPLASHSCREEN;
 
   static final routes = [
+    GetPage(
+      name: _Paths.SPLASHSCREEN,
+      page: () => SplashScreen(),
+      binding: SplashscreenBinding(),
+    ),
     GetPage(
       name: _Paths.ONBOARDING,
       page: () => OnboardingView(),

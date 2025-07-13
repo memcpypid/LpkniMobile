@@ -14,7 +14,7 @@ class CustomerprofileView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF86AEFF),
         elevation: 0,
         title: const Text(
           "Profil",
@@ -59,7 +59,7 @@ class CustomerprofileView extends StatelessWidget {
         Container(
           height: 60, // Sesuaikan agar setengah avatar tertutup
           width: double.infinity,
-          color: Colors.teal,
+          color: Color(0xFF86AEFF),
         ),
 
         // ✅ Profil dengan Avatar & Info
@@ -151,7 +151,7 @@ class CustomerprofileView extends StatelessWidget {
   Widget _buildListTile(IconData icon, String title,
       {String? trailingText, VoidCallback? onTap}) {
     return ListTile(
-      leading: Icon(icon, color: Colors.teal),
+      leading: Icon(icon, color: Color(0xFF86AEFF)),
       title: Text(title),
       trailing: trailingText != null
           ? Text(trailingText, style: const TextStyle(color: Colors.grey))
@@ -164,7 +164,7 @@ class CustomerprofileView extends StatelessWidget {
     return SwitchListTile(
       title: Text(title),
       value: value,
-      activeColor: Colors.teal,
+      activeColor: Color(0xFF86AEFF),
       onChanged: onChanged,
     );
   }

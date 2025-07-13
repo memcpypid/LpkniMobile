@@ -4,6 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   /* Initialize*/
+  static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const ONBOARDING = _Paths.ONBOARDING;
   /*Customer*/
   static const HOMECUSTOMER = _Paths.HOMECUSTOMER;
@@ -48,6 +49,7 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   /* Initialize*/
+  static const SPLASHSCREEN = '/splash-screen';
   static const ONBOARDING = '/onboarding';
   /*Customer*/
   static const LANDINGCUSTOMER = '/landing-customer';
