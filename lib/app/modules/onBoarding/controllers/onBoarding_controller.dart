@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lpkni/app/modules/Customer/Landing/views/LandingCustomer_view.dart';
-import 'package:lpkni/app/modules/Customer/Login/views/loginCustomer_view.dart';
-import 'package:lpkni/app/modules/onBoarding/views/onBoardingSelection_view.dart';
+// import 'package:lpkni/app/modules/Customer/Landing/views/LandingCustomer_view.dart';
+// import 'package:lpkni/app/modules/Customer/Login/views/loginCustomer_view.dart';
+// import 'package:lpkni/app/modules/onBoarding/views/onBoardingSelection_view.dart';
 import 'package:lpkni/app/routes/app_pages.dart';
+// import 'package:lpkni/app/services/api_service.dart';
+import 'package:lpkni/app/services/auth_service.dart';
 
 class OnboardingController extends GetxController {
-  //TODO: Implement HomeController
+  late AuthService auth;
   final PageController pageController =
       PageController(); // Kontrol untuk PageView
   var currentPage = 0.obs; // State untuk halaman aktif
@@ -41,6 +43,7 @@ class OnboardingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    
   }
 
   @override
@@ -53,12 +56,19 @@ class OnboardingController extends GetxController {
     super.onClose();
   }
 
+
+
   void nextPage() {
     if (currentPage.value < 2) {
       // Pastikan tidak melewati halaman terakhir
       pageController.nextPage(
           duration: Duration(milliseconds: 500), curve: Curves.ease);
     } else {
+      Get.toNamed(Routes.LANDINGCUSTOMER);
+      // Get.off(
+          // OnboardingselectionView()); // Setelah halaman terakhir, langsung ke Home
+          // LandingcustomerView());
+          // LogincustomerView());
       Get.toNamed(Routes.LANDINGCUSTOMER);
       // Get.off(
           // OnboardingselectionView()); // Setelah halaman terakhir, langsung ke Home
@@ -78,7 +88,7 @@ class OnboardingController extends GetxController {
         Get.toNamed(Routes.LANDINGCUSTOMER);
         break;
       case 'Pemilik Warung':
-        Get.toNamed(Routes.LANDINGMERCHANT);
+        // Get.toNamed(Routes.LANDINGMERCHANT);
         break;
       // case 'Grosir':
       //   Get.toNamed(Routes.GROSIR_PAGE);

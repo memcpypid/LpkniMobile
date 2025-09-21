@@ -9,3 +9,11 @@ class CustomerprofileBinding extends Bindings {
     Get.lazyPut<ButtomnavbarController>(() => ButtomnavbarController());
   }
 }
+
+class DetailProfileBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<CustomerprofileController>(() => CustomerprofileController());
+    Get.lazyPut<ButtomnavbarController>(() => ButtomnavbarController());
+  }
+}

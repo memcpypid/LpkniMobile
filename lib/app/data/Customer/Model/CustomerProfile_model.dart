@@ -1,4 +1,4 @@
-  class UserProfile {
+class UserProfile2 {
   final String name;
   final String email;
   final String profileImage;
@@ -6,14 +6,14 @@
   bool pushNotification;
   bool announcementNotification;
 
-  UserProfile({
+  UserProfile2({
     required this.name,
     required this.email,
     required this.profileImage,
     required this.language,
     this.pushNotification = true,
     this.announcementNotification = false,
-  }); 
+  });
 
   // Convert to JSON
   Map<String, dynamic> toJson() {
@@ -28,8 +28,8 @@
   }
 
   // Convert from JSON
-  factory UserProfile.fromJson(Map<String, dynamic> json) {
-    return UserProfile(
+  factory UserProfile2.fromJson(Map<String, dynamic> json) {
+    return UserProfile2(
       name: json['name'],
       email: json['email'],
       profileImage: json['profileImage'],

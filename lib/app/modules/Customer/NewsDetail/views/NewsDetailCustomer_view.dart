@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:lpkni/app/data/Customer/Model/news_model.dart';
 
 class NewsdetailcustomerView extends StatelessWidget {
-  final News news; // ✅ Constructor menerima data berita
+  final ArtikelModel news; // ✅ Constructor menerima data berita
 
   const NewsdetailcustomerView({Key? key, required this.news})
       : super(key: key); // ✅ Constructor
@@ -32,20 +32,20 @@ class NewsdetailcustomerView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ✅ Gambar Berita
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  news.image,
-                  width: double.infinity,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(12),
+              //   child: Image.asset(
+              //     news.image,
+              //     width: double.infinity,
+              //     height: 200,
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               const SizedBox(height: 10),
 
               // ✅ Judul Berita
               Text(
-                news.title,
+                news.judul,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class NewsdetailcustomerView extends StatelessWidget {
                   const Icon(Icons.person, size: 16, color: Colors.grey),
                   const SizedBox(width: 5),
                   Text(
-                    news.author,
+                    news.penulisId,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -72,7 +72,7 @@ class NewsdetailcustomerView extends StatelessWidget {
                       size: 16, color: Colors.grey),
                   const SizedBox(width: 5),
                   Text(
-                    "${news.date} - ${news.time}",
+                    "${news.tanggalTerbit}",
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -88,7 +88,7 @@ class NewsdetailcustomerView extends StatelessWidget {
 
               // ✅ Deskripsi Berita
               Text(
-                news.description,
+                news.deskripsi1,
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black87,

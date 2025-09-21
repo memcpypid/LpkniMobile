@@ -1,172 +1,133 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:lpkni/app/data/Customer/Model/cart_model.dart';
-import 'package:lpkni/app/data/Customer/Model/food_model.dart';
-import 'package:lpkni/app/modules/Customer/Components/widgets/CustomerDialog_widget.dart';
+import 'package:lpkni/app/data/Customer/Model/checkout_model.dart' hide Gudang;
+import 'package:lpkni/app/modules/Customer/Profile/controllers/CustomerProfile_controller.dart';
+import 'package:lpkni/app/services/api_service.dart';
+import 'dart:developer';
 
 class CartcustomerController extends GetxController {
+  late CustomerprofileController pCont = Get.put(CustomerprofileController());
+  late ApiService api;
   var cartItems = <CartItem>[].obs;
-  var selectedItems = <CartItem>[].obs; // ✅ Menyimpan item yang dipilih
-  var isAllSelected = false.obs; // ✅ Status pilih semua
+  var cartData = <CartData>[].obs;
+  var gudang = <Gudang>[].obs;
+  var selectedItems = <CartItem>[].obs;
+  var isAllSelected = false.obs;
   var subtotal = 0.0.obs;
-  var selectedSubtotal = 0.0.obs; // ✅ Total hanya untuk item yang dipilih
+  var selectedSubtotal = 0.0.obs;
   var deliveryFee = 0.0.obs;
   var discount = 0.0.obs;
   var totalAmount = 0.0.obs;
-  var selectedTotalAmount = 0.0.obs; // ✅ Total hanya untuk item yang dipilih
-  final box = GetStorage(); // ✅ Inisialisasi local storage
+  var selectedTotalAmount = 0.0.obs;
+  var isSuccess = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    loadCartFromStorage(); // ✅ Load data dari local storage saat controller dimulai
-    calculateTotal();
+    api = Get.find<ApiService>();
+    fetchCart(); // ✅ load cart dari API saat init
   }
 
-// ✅ Dialog Konfirmasi Hapus
-  void showDeleteConfirmation(CartItem product) {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // **Warning Icon**
-            const Icon(Icons.warning_amber_rounded,
-                color: Colors.red, size: 50),
-            const SizedBox(height: 10),
-
-            // **Title**
-            const Text(
-              "Hapus Item dari Keranjang?",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
-            ),
-            const SizedBox(height: 8),
-
-            // **Subtitle**
-            const Text(
-              "Anda yakin ingin menghapus item ini dari keranjang?",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black54),
-            ),
-            const SizedBox(height: 20),
-
-            // **Action Buttons**
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // **Cancel Button**
-                Expanded(
-                  child: TextButton(
-                    onPressed: () => Get.back(),
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      backgroundColor: Colors.grey[300],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      "Batal",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-
-                // **Delete Button**
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      removeFromCart(product);
-                      Get.back();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      "Hapus",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      isDismissible: true,
-    );
+  void refresh(){
+    fetchCart();
   }
 
-  // ✅ Tambahkan item ke keranjang dari FoodItem
-  void addToCart(FoodItem foodItem) {
-    var index =
-        cartItems.indexWhere((element) => element.name == foodItem.name);
-    if (index != -1) {
-      cartItems[index].quantity++;
-    } else {
-      cartItems.add(CartItem.fromFoodItem(foodItem));
+  /// ✅ Ambil data keranjang dari API
+  Future<void> fetchCart() async {
+    print("fetching cart....");
+    try {
+      log("Fetching cart data from API...");
+      final result = await api.getItemCart(); // ✅ ini CartResponse
+      final data = result.data;
+      log("data keranjang: ${jsonEncode(result)}");
+      if(data != null){
+
+      cartData.assignAll(data);
+      }
+
+      calculateTotal();
+    } catch (e) {
+      print("Kesalahan, Gagal mengambil keranjang: $e");
+      Get.snackbar("Kesalahan", "Gagal mengambil keranjang: $e");
     }
-    saveCartToStorage();
-    calculateTotal();
-    showSuccessDialog();
   }
 
-  // ✅ Hapus item dari keranjang
-  void removeFromCart(CartItem item) {
-    cartItems.remove(item);
-    selectedItems.remove(item); // ✅ Hapus juga dari list item yang dipilih
-    saveCartToStorage();
-    calculateTotal();
+  var checkoutList = <Checkout>[].obs;
+
+  /// ✅ Tambah item ke keranjang
+  Future<void> addToCart(String productID, String gudangID, int qty) async {
+    try {
+      final result = await api.addToCart(productID, gudangID, qty);
+      if (result["status_code"] == 200) {
+        isSuccess.value = true;
+        await fetchCart(); // refresh isi keranjang
+      } else {
+        Get.snackbar("Kesalahan Sistem", "Produk gagal dimasukkan.");
+      }
+    } catch (e) {
+      Get.snackbar("Kesalahan", "Gagal memasukkan produk: $e");
+    }
   }
 
-  // ✅ Tambah jumlah item dalam keranjang
-  void increaseQuantity(CartItem item) {
-    item.quantity++;
-    cartItems.refresh();
-    saveCartToStorage();
-    calculateTotal();
-  }
-
-  // ✅ Kurangi jumlah item dalam keranjang
-  void decreaseQuantity(CartItem item) {
-    if (item.quantity > 1) {
-      item.quantity--;
-    } else {
+  /// ✅ Hapus item dari keranjang
+  Future<void> removeFromCart(CartItem item) async {
+    try {
+      await api.removeFromCart(item.id);
       cartItems.remove(item);
       selectedItems.remove(item);
+      calculateTotal();
+      refresh();
+    } catch (e) {
+      Get.snackbar("Kesalahan", "Gagal menghapus produk: $e");
     }
-    cartItems.refresh();
-    saveCartToStorage();
-    calculateTotal();
   }
 
-  // ✅ Terapkan diskon dari kode promo
+  /// ✅ Tambah jumlah item
+  Future<void> increaseQuantity(CartItem item) async {
+    try {
+      final newQty = item.quantity + 1;
+      await api.updateQty(item.id, newQty);
+      item.quantity = newQty;
+      item.subtotal = newQty * item.produk.harga; // update subtotal lokal
+      cartItems.refresh();
+      calculateTotal();
+      refresh();
+    } catch (e) {
+      Get.snackbar("Kesalahan", "Gagal menambah jumlah: $e");
+    }
+  }
+
+  /// ✅ Kurangi jumlah item
+  Future<void> decreaseQuantity(CartItem item) async {
+    try {
+      final newQty = item.quantity - 1;
+      if (newQty <= 0) {
+        // await removeFromCart(item);
+        showDeleteConfirmation(item);
+      } else {
+        await api.updateQty(item.id, newQty);
+        item.quantity = newQty;
+        item.subtotal = newQty * item.produk.harga;
+        cartItems.refresh();
+        calculateTotal();
+        refresh();
+        // await fetchCart();
+      }
+    } catch (e) {
+      Get.snackbar("Kesalahan", "Gagal mengurangi jumlah: $e");
+    }
+  }
+
+  /// ✅ Terapkan diskon
   void applyCoupon(double discountAmount) {
     discount.value = discountAmount;
-    saveCartToStorage();
     calculateTotal();
   }
 
-  // ✅ Pilih / Batalkan Pilih Item
+  /// ✅ Pilih / Batalkan pilih item
   void toggleItemSelection(CartItem item) {
     if (selectedItems.contains(item)) {
       selectedItems.remove(item);
@@ -177,7 +138,7 @@ class CartcustomerController extends GetxController {
     calculateTotal();
   }
 
-  // ✅ Pilih / Batalkan Semua Item
+  /// ✅ Pilih semua / batal pilih semua
   void toggleSelectAll(bool value) {
     if (value) {
       selectedItems.assignAll(cartItems);
@@ -188,64 +149,85 @@ class CartcustomerController extends GetxController {
     calculateTotal();
   }
 
-  // ✅ Hitung ulang total harga
+  /// ✅ Hitung ulang total harga
   void calculateTotal() {
-    subtotal.value = cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    subtotal.value = cartItems.fold(0.0, (sum, item) => sum + item.subtotal);
     totalAmount.value = subtotal.value + deliveryFee.value - discount.value;
-    // ✅ Hanya hitung total harga dari item yang dipilih
+
     selectedSubtotal.value =
-        selectedItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+        selectedItems.fold(0.0, (sum, item) => sum + item.subtotal);
     selectedTotalAmount.value =
         selectedSubtotal.value + deliveryFee.value - discount.value;
   }
 
-  // ✅ Simpan `cartItems` ke local storage
-  void saveCartToStorage() {
-    List<String> cartJson =
-        cartItems.map((item) => jsonEncode(item.toJson())).toList();
-    box.write('cartItems', cartJson);
-  }
+  /// ✅ Checkout item yang dipilih
+  void checkoutSelectedItems() async {
+    if (selectedItems.isEmpty) {
+      Get.snackbar("Checkout Gagal", "Pilih minimal satu item untuk checkout");
+      return;
+    }
 
-  // ✅ Load `cartItems` dari local storage saat aplikasi dibuka
-  void loadCartFromStorage() {
     try {
-      // ✅ Read the data safely, ensuring it returns a List<String>
-      List<dynamic>? cartJson = box.read<List<dynamic>>('cartItems');
-
-      // ✅ Check if the stored data is valid before proceeding
-      // ignore: unnecessary_type_check
-      if (cartJson != null && cartJson is List) {
-        cartItems.assignAll(
-          cartJson
-              .map((item) {
-                try {
-                  return CartItem.fromJson(
-                      jsonDecode(item)); // ✅ Try decoding each item
-                } catch (e) {
-                  print(
-                      "Error decoding cart item: $e"); // ✅ Handle JSON parsing errors
-                  return null;
-                }
-              })
-              .whereType<
-                  CartItem>() // ✅ Filter out any null values from failed parsing
-              .toList(),
+      final checkouts = selectedItems.map((item) {
+        // cari gudang asal dari cartData
+        // CartData cartData;
+        final parentCart = cartData.firstWhere(
+          (cart) => cart.items!.contains(item),
+          orElse: () =>
+              throw Exception("Gudang tidak ditemukan untuk item ${item.id}"),
         );
+
+        return Checkout.fromCartItem(
+          item,
+          namaGudang: parentCart.gudang.nama,
+          gudangId: parentCart.gudang.id,
+        );
+      }).toList();
+
+      checkoutList.assignAll(checkouts);
+      // await api.checkOut(checkouts);
+      // log("Checkout data: ${checkoutList.map((e) => e.toJson()).toList()}");
+      // log("co data ${checkouts.toList()}");
+      // log("co list: ${checkoutList.toJson().toString()}");
+
+      // contoh kirim ke API
+      // await api.checkOut(checkoutList.map((a) => a.toJson) );
+
+      final result = await api.checkOut(checkoutList);
+      // log("result : ${result.statusCode}");
+      if (result.statusCode == 200) {
+        // Get.snackbar("Berhasil", "Checkout berhasil (${checkoutList.length} item)");
+        Get.toNamed('/checkout');
       }
     } catch (e) {
-      print("Error loading cart from storage: $e");
+      log("Gagal, Checkout gagal: $e");
+      Get.snackbar("Gagal", "Checkout gagal: $e");
     }
   }
 
-  // ✅ Checkout Item yang Dipilih
-  void checkoutSelectedItems() {
-    if (selectedItems.isNotEmpty) {
-      print(
-          "Checkout dengan ${selectedItems.length} item: ${selectedItems.map((e) => e.name).toList()}");
-      // TODO: Tambahkan logika navigasi ke halaman checkout
-    } else {
-      Get.snackbar("Checkout Gagal", "Pilih minimal satu item untuk checkout",
-          snackPosition: SnackPosition.BOTTOM);
-    }
+  void showDeleteConfirmation(CartItem product) {
+    Get.defaultDialog(
+      title: "Hapus Produk",
+      middleText:
+          "Apakah Anda yakin ingin menghapus ${product.produk.nama} dari keranjang?",
+      textCancel: "Batal",
+      textConfirm: "Hapus",
+      confirmTextColor: Colors.white,
+      onConfirm: () {
+        cartItems.remove(product);
+        selectedItems.remove(product);
+        removeFromCart(product);
+        Get.back();
+        Get.snackbar(
+          "Produk Dihapus",
+          "${product.produk.nama} ${product.produk.kemasan} berhasil dihapus dari keranjang.",
+          backgroundColor: Colors.redAccent.withOpacity(0.9),
+          colorText: Colors.white,
+        );
+        // refresh();
+      },
+    );
   }
+
+  // Future<List> getCheckout
 }

@@ -4,8 +4,8 @@ import 'package:lpkni/app/modules/Customer/Register/controllers/RegisterCustomer
 class RegistercustomerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<RegistercustomerController>(
-      () => RegistercustomerController(),
+    Get.lazyPut<RegisterCustomerController>(
+      () => RegisterCustomerController(),
     );
   }
 }

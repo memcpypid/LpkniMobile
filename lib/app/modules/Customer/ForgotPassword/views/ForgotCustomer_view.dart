@@ -46,7 +46,7 @@ class ForgotcustomerView extends GetView<ForgotcustomerController> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 suffixIcon: IconButton(
-                  icon: const Icon(Icons.arrow_forward, color: Colors.teal),
+                  icon: const Icon(Icons.arrow_forward, color: Colors.blue),
                   onPressed: controller.sendResetEmail,
                 ),
               ),

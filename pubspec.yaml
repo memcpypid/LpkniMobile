@@ -46,11 +46,21 @@ dependencies:
   #file_picker: ^5.2.3
   path_provider: ^2.0.9
   connectivity_plus: ^6.0.3
-  audioplayers: ^6.1.0
+  audioplayers: ^6.5.0
   flutter_rating_bar: ^4.0.0
   badges: ^3.1.2
   flutter_slidable: ^4.0.0 # Versi terbaru
   intl: ^0.18.0
+  cookie_jar: ^4.0.8
+  dio: ^5.9.0
+  dio_cookie_manager: ^3.3.0
+  encrypt: ^5.0.3
+  url_launcher: ^6.3.2
+  rename: ^3.1.0
+  # dotenv: ^4.2.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_dotenv: ^6.0.0
+  # flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +72,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  integration_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -75,9 +87,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/images/
     - assets/product/
     - assets/background/
+    - assets/news/
+    - assets/logo/
+    - assets/news/QMas-1.jpg
+    - assets/news/QMas-2.jpg  
+    - assets/news/QMas-3.jpg
     - assets/images/splashScreen.png
     - assets/images/ProfilePerempuan.png
     - assets/images/ProfilLaki.png
@@ -98,6 +116,10 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/LOGO_Q-MAS_M.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

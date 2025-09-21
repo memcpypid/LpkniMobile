@@ -30,7 +30,7 @@ class BottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildNavItem(Icons.home, "Home", 0),
-            _buildNavItem(Icons.menu, "Menu", 1),
+            _buildNavItem(Icons.menu, "Katalog", 1),
             _buildNavItem(Icons.shopping_cart, "Keranjang", 2),
             _buildNavItem(Icons.person, "Profil", 3),
           ],
@@ -49,6 +49,7 @@ class BottomNavBar extends StatelessWidget {
         decoration: isSelected
             ? BoxDecoration(
                 color: const Color(0xFF86AEFF),
+                color: const Color(0xFF86AEFF),
                 borderRadius: BorderRadius.circular(30),
               )
             : null,
@@ -57,6 +58,7 @@ class BottomNavBar extends StatelessWidget {
             Icon(
               icon,
               size: 28,
+              color: isSelected ? Colors.white : const Color(0xFF86AEFF),
               color: isSelected ? Colors.white : const Color(0xFF86AEFF),
             ),
             if (isSelected)

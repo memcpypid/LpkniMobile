@@ -18,7 +18,7 @@ class StatuspasswordcustomerView
             Obx(() => Icon(
                   controller.isSuccess.value ? Icons.check_circle : Icons.error,
                   size: 100,
-                  color: controller.isSuccess.value ? Colors.teal : Colors.red,
+                  color: controller.isSuccess.value ? Colors.blue : Colors.red,
                 )),
             const SizedBox(height: 20),
             Obx(() => Text(

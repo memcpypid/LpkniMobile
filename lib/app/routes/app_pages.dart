@@ -4,6 +4,8 @@ import 'package:lpkni/app/modules/Customer/Cart/views/cartCustomer_view.dart';
 import 'package:lpkni/app/modules/Customer/Chat/bindings/CustomerChat_binding.dart';
 import 'package:lpkni/app/modules/Customer/Chat/views/CustomerChatList_view.dart';
 import 'package:lpkni/app/modules/Customer/Chat/views/CustomerRoomChat_view.dart';
+import 'package:lpkni/app/modules/Customer/Checkout/binding/Checkout_binding.dart';
+import 'package:lpkni/app/modules/Customer/Checkout/view/checkout_view.dart';
 import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/ForgotCustomer_binding.dart';
 import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/ResetPasswordCustomer_binding.dart';
 import 'package:lpkni/app/modules/Customer/ForgotPassword/bindings/StatusPasswordCustomer_binding.dart';
@@ -18,8 +20,8 @@ import 'package:lpkni/app/modules/Customer/Landing/bindings/LandingCustomer_bind
 import 'package:lpkni/app/modules/Customer/Landing/views/LandingCustomer_view.dart';
 import 'package:lpkni/app/modules/Customer/Login/bindings/loginCustomer_binding.dart';
 import 'package:lpkni/app/modules/Customer/Login/views/loginCustomer_view.dart';
-import 'package:lpkni/app/modules/Customer/Menu/bindings/CustomerMenu_binding.dart';
-import 'package:lpkni/app/modules/Customer/Menu/views/CustomerMenu_view.dart';
+import 'package:lpkni/app/modules/Customer/Products/bindings/Products_binding.dart';
+import 'package:lpkni/app/modules/Customer/Products/views/Products_view.dart';
 import 'package:lpkni/app/modules/Customer/MenuDetail/bindings/menuDetailCustomer_binding.dart';
 import 'package:lpkni/app/modules/Customer/MenuDetail/views/MenuDetailCustomer_view.dart';
 import 'package:lpkni/app/modules/Customer/NewsDetail/bindings/NewsDetailCustomer_binding.dart';
@@ -28,32 +30,15 @@ import 'package:lpkni/app/modules/Customer/Notification/bindings/notificationCus
 import 'package:lpkni/app/modules/Customer/Notification/views/notificationCustomer_view.dart';
 import 'package:lpkni/app/modules/Customer/Profile/bindings/CustomerProfile_binding.dart';
 import 'package:lpkni/app/modules/Customer/Profile/views/CustomerProfile_view.dart';
+import 'package:lpkni/app/modules/Customer/Profile/views/detailProfile_view.dart';
 import 'package:lpkni/app/modules/Customer/Register/bindings/RegisterCustomer_binding.dart';
 import 'package:lpkni/app/modules/Customer/Register/views/RegisterCustomer_view.dart';
-import 'package:lpkni/app/modules/Merchant/Chat/bindings/MerchantChat_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Chat/views/MerchantChatList_view.dart';
-import 'package:lpkni/app/modules/Merchant/Chat/views/MerchantRoomChat_view.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/ForgotMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/StatusPasswordMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/bindings/VerifotpMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/ForgotMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/StatusPasswordMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/ForgotPassword/views/VerifotpMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Home/bindings/HomeMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Home/views/HomeMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Landing/bindings/LandingMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Landing/views/LandingMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Login/bindings/loginMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Login/views/loginMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Menu/bindings/MenuMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Menu/views/MenuMerchantEdit_view.dart';
-import 'package:lpkni/app/modules/Merchant/Menu/views/MenuMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Notification/bindings/notificationMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Notification/views/notificationMerchant_view.dart';
-import 'package:lpkni/app/modules/Merchant/Register/bindings/RegisterMerchant_binding.dart';
-import 'package:lpkni/app/modules/Merchant/Register/views/RegisterMerchant_view.dart';
+import 'package:lpkni/app/modules/Customer/historyOrder/bindings/historyOrders_binding.dart';
+import 'package:lpkni/app/modules/Customer/historyOrder/views/historyOrders_view.dart';
 import 'package:lpkni/app/modules/onBoarding/bindings/onBoarding_binding.dart';
 import 'package:lpkni/app/modules/onBoarding/views/onBoarding_view.dart';
+import 'package:lpkni/app/modules/splashScreen/bindings/splashScreen_binding.dart';
+import 'package:lpkni/app/modules/splashScreen/views/splashScreen_view.dart';
 import 'package:lpkni/app/modules/splashScreen/bindings/splashScreen_binding.dart';
 import 'package:lpkni/app/modules/splashScreen/views/splashScreen_view.dart';
 part 'app_routes.dart';
@@ -62,9 +47,14 @@ class AppPages {
   AppPages._();
 
   // static const INITIAL = Routes.ONBOARDING;
-static const INITIAL = Routes.SPLASHSCREEN;
+  static const INITIAL = Routes.SPLASHSCREEN;
 
   static final routes = [
+    GetPage(
+      name: _Paths.SPLASHSCREEN,
+      page: () => SplashScreen(),
+      binding: SplashscreenBinding(),
+    ),
     GetPage(
       name: _Paths.SPLASHSCREEN,
       page: () => SplashScreen(),
@@ -118,8 +108,8 @@ static const INITIAL = Routes.SPLASHSCREEN;
     ),
     GetPage(
       name: _Paths.MENUCUSTOMER,
-      page: () => CustomermenuView(),
-      binding: CustomermenuBinding(),
+      page: () => ProductsView(),
+      binding: ProductsBinding(),
     ),
     GetPage(
       name: _Paths.CARTCUSTOMER,
@@ -146,7 +136,7 @@ static const INITIAL = Routes.SPLASHSCREEN;
     GetPage(
       name: _Paths.MENUDETAILCUSTOMER,
       page: () => MenudetailcustomerView(
-        foodItem: Get.arguments,
+        productItem: Get.arguments,
       ),
       binding: MenudetailcustomerBinding(),
     ),
@@ -162,80 +152,20 @@ static const INITIAL = Routes.SPLASHSCREEN;
       page: () => CustomerprofileView(),
       binding: CustomerprofileBinding(),
     ),
-    /*------------------- Merchant ---------------------------*/
     GetPage(
-      name: _Paths.LANDINGMERCHANT,
-      page: () => LandingmerchantView(),
-      binding: LandingmerchantBinding(),
+      name: _Paths.DETAILPROFILE,
+      page: () => ProfileDetailView(),
+      binding: DetailProfileBinding(),
     ),
     GetPage(
-      name: _Paths.REGISTERMERCHANT,
-      page: () => RegistermerchantView(),
-      binding: RegistermerchantBinding(),
+      name: _Paths.CHECKOUT,
+      page: () => CheckoutView(),
+      binding: CheckoutBinding(),
     ),
     GetPage(
-      name: _Paths.LOGINMERCHANT,
-      page: () => LoginmerchantView(),
-      binding: LoginmerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGOTPASSWORDMERCHANT,
-      page: () => ForgotmerchantView(),
-      binding: ForgotmerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.OTPPASSWORDMERCHANT,
-      page: () => VerifotpmerchantView(),
-      binding: VerifotpmerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.RESETPASSWORDMERCHANT,
-      page: () => ResetpasswordcustomerView(),
-      binding: ResetpasswordcustomerBinding(),
-    ),
-    GetPage(
-      name: _Paths.STATUSRESETPASSWORDMERCHANT,
-      page: () => StatuspasswordmerchantView(),
-      binding: StatuspasswordmerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.HOMEMERCHANT,
-      page: () => HomemerchantView(),
-      binding: HomemerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.NOTIFICATIONMERCHANT,
-      page: () => NotificationmerchantView(),
-      binding: NotificationmerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.CHATLISTMERCHANT,
-      page: () => MerchantchatlistView(),
-      binding: MerchantchatBinding(),
-    ),
-    GetPage(
-      name: _Paths.ROOMCHATMERCHANT,
-      page: () => MerchantroomchatView(
-        chatUser: Get.arguments,
-      ),
-      binding: MerchantchatBinding(),
-    ),
-    GetPage(
-      name: _Paths.MENUMERCHANT,
-      page: () => MenumerchantView(),
-      binding: MenumerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDITMENUMERCHANT,
-      page: () => MenumerchanteditView(
-        food: Get.arguments,
-      ),
-      binding: MenumerchantBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADDMENUMERCHANT,
-      page: () => MenumerchanteditView(),
-      binding: MenumerchantBinding(),
+      name: _Paths.ORDERHISTORY,
+      page: () => OrderHistoryView(),
+      binding: HistoryordersBinding(),
     ),
   ];
 }

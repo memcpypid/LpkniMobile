@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lpkni/app/modules/splashScreen/controllers/splashScreen_controller.dart';
 import 'package:lpkni/app/routes/app_pages.dart';
+import 'dart:math' as math;
 import 'dart:math' as math;
 
 class SplashScreen extends StatefulWidget {
@@ -12,10 +16,27 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-
   final box = GetStorage();
 
   final AudioPlayer _audioPlayer = AudioPlayer();
+  late AnimationController _fadeController;
+  late AnimationController _scaleController;
+  late AnimationController _waveController;
+  late AnimationController _dropController;
+  late AnimationController _bubbleController;
+  late AnimationController _rippleController;
+
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _waveAnimation;
+  late Animation<double> _dropAnimation;
+  late Animation<double> _bubbleAnimation;
+  late Animation<double> _rippleAnimation;
+
+  // Warna tema air
+  final Color primaryColor = Color(0xFF86AEFF);
+  final Color waterBlue = Color(0xFF4A90E2);
+  final Color lightBlue = Color(0xFFB3D9FF);
   late AnimationController _fadeController;
   late AnimationController _scaleController;
   late AnimationController _waveController;
@@ -39,9 +60,16 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _initAnimations();
+    _initAnimations();
     _playMusic();
-    _navigateToHome();
+    // Get.put(SplashscreenController());
+    Get.find<SplashscreenController>();
+    // _navigateToHome();
+    // Timer(const Duration(seconds: 2));
+    // Future.delayed(Duration(seconds: 5));
   }
+
+  // _initStart() async {}
 
   _initAnimations() {
     // Fade Animation
@@ -109,19 +137,31 @@ class _SplashScreenState extends State<SplashScreen>
     } catch (e) {
       print('Error playing audio: $e');
     }
-  }
-
-  _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 5));
-    if(box.read('isLoggedIn') == true ){
-      Get.offAllNamed(Routes.HOMECUSTOMER);
-    }else {
-      Get.offAllNamed(Routes.ONBOARDING);
+    try {
+      await _audioPlayer.play(AssetSource('music/sound2.wav'));
+    } catch (e) {
+      print('Error playing audio: $e');
     }
   }
 
+  // _navigateToHome() async {
+    
+  //   await Future.delayed(Duration(seconds: 5));
+  //   if (box.read('isLoggedIn') == true) {
+  //     Get.offAllNamed(Routes.HOMECUSTOMER);
+  //   } else {
+  //     Get.offAllNamed(Routes.ONBOARDING);
+  //   }
+  // }
+
   @override
   void dispose() {
+    _fadeController.dispose();
+    _scaleController.dispose();
+    _waveController.dispose();
+    _dropController.dispose();
+    _bubbleController.dispose();
+    _rippleController.dispose();
     _fadeController.dispose();
     _scaleController.dispose();
     _waveController.dispose();
@@ -199,12 +239,14 @@ class _SplashScreenState extends State<SplashScreen>
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.white.withOpacity(0.4),
+                                            color:
+                                                Colors.white.withOpacity(0.4),
                                             blurRadius: 25,
                                             spreadRadius: 8,
                                           ),
                                           BoxShadow(
-                                            color: primaryColor.withOpacity(0.3),
+                                            color:
+                                                primaryColor.withOpacity(0.3),
                                             blurRadius: 15,
                                             spreadRadius: 3,
                                           ),
@@ -224,7 +266,8 @@ class _SplashScreenState extends State<SplashScreen>
 
                               // App Name dengan efek air
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                   gradient: LinearGradient(
@@ -239,7 +282,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ),
                                 child: Text(
-                                  'QMas Water',
+                                  'Q-Mas M Store',
                                   style: TextStyle(
                                     fontSize: 36,
                                     fontWeight: FontWeight.bold,
@@ -295,7 +338,8 @@ class _SplashScreenState extends State<SplashScreen>
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white.withOpacity(0.8),
                                       ),
-                                      backgroundColor: Colors.white.withOpacity(0.2),
+                                      backgroundColor:
+                                          Colors.white.withOpacity(0.2),
                                     ),
                                     Icon(
                                       Icons.opacity,
@@ -381,7 +425,8 @@ class _SplashScreenState extends State<SplashScreen>
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white.withOpacity(0.3 * (1 - _rippleAnimation.value)),
+                color: Colors.white
+                    .withOpacity(0.3 * (1 - _rippleAnimation.value)),
                 width: 2,
               ),
             ),
@@ -401,7 +446,8 @@ class _SplashScreenState extends State<SplashScreen>
         double animationValue = (_bubbleAnimation.value + delays[index]) % 1.0;
         return Positioned(
           left: 50.0 + (index * 40.0),
-          bottom: -50 + (animationValue * (MediaQuery.of(context).size.height + 100)),
+          bottom: -50 +
+              (animationValue * (MediaQuery.of(context).size.height + 100)),
           child: Opacity(
             opacity: 0.6 * (1 - animationValue),
             child: Container(
